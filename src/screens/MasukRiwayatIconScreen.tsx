@@ -16,9 +16,7 @@ const MasukRiwayatIconScreen = (props: any) => {
   const [dataRiwayatIcon, setDataRiwayatIcon] = useState<any>([]);
   const getListRiwayatIcon = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}riwayat/masuk_list.php?tipe=${"icon"}`
-      );
+      const response = await axios.get(`${BASE_URL}barang_masuk_icon/list.php`);
 
       if (response.data.status === "success") {
         setDataRiwayatIcon(response.data.data);
@@ -71,7 +69,7 @@ const MasukRiwayatIconScreen = (props: any) => {
                   backgroundColor: "#1e81b0",
                 }}
               >
-                Tanggal Masuk : {moment(item?.tanggal).format("L")}
+                Tanggal Masuk : {moment(item?.tanggal_masuk).format("L")}
               </Text>
               <Text
                 style={{
@@ -81,7 +79,7 @@ const MasukRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Kode Barang : {item?.kode_barang}
+                Kode Barang : {item?.kd_barang_masuk}
               </Text>
               <Text
                 style={{
@@ -91,7 +89,7 @@ const MasukRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Nama Barang : {item?.nama_barang}
+                Nama Barang : {item?.nm_barang}
               </Text>
               <Text
                 style={{
@@ -101,7 +99,7 @@ const MasukRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Jumlah Masuk : {item?.jumlah}
+                Jumlah Masuk : {item?.jumlah_masuk}
               </Text>
             </View>
           )}
