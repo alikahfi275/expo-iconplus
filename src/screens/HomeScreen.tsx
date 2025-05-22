@@ -19,6 +19,7 @@ import {
   menuRetur,
   menuServis,
 } from "../../assets/image";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();
@@ -66,7 +67,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1 }}>
         <View
@@ -161,7 +162,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
         <CModal modalVisible={showModal} setModalVisible={setShowModal} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

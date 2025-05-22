@@ -11,6 +11,7 @@ import axios from "axios";
 import { BASE_URL } from "../api/api";
 import Icons from "../components/Icons";
 import { useFocusEffect } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturRiwayatServiceScreen = (props: any) => {
   const [dataRiwayatService, setDataRiwayatService] = useState<any>([]);
@@ -34,7 +35,7 @@ const ReturRiwayatServiceScreen = (props: any) => {
     }, [])
   );
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#FFFFA3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#FFFFA3" }}>
@@ -184,7 +185,7 @@ const ReturRiwayatServiceScreen = (props: any) => {
           <Icons name="search" type="MaterialIcons" size={40} color="black" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

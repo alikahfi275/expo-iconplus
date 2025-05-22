@@ -15,6 +15,7 @@ import ModalList from "../components/ModalList";
 import axios from "axios";
 import moment from "moment";
 import { BASE_URL } from "../api/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const KeluarSearchRiwayatScreen = (props: any) => {
   const isGudang = props?.route?.params?.isGudang || false;
@@ -141,7 +142,7 @@ const KeluarSearchRiwayatScreen = (props: any) => {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
@@ -321,7 +322,7 @@ const KeluarSearchRiwayatScreen = (props: any) => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -11,6 +11,7 @@ import Icons from "../components/Icons";
 import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay";
 import { BASE_URL } from "../api/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const KeluarServiceScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -77,7 +78,7 @@ const KeluarServiceScreen = (props: any) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Spinner visible={showSpinner} textContent={"Loading..."} color="white" />
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
@@ -242,7 +243,7 @@ const KeluarServiceScreen = (props: any) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

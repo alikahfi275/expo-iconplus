@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NoImage } from "../../assets/image";
 import { BASE_URL } from "../api/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DetailBarangScreen = (props: any) => {
   const { kodeBarang } = props?.route?.params;
@@ -26,7 +27,7 @@ const DetailBarangScreen = (props: any) => {
     getDetailBarang();
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View
@@ -108,7 +109,7 @@ const DetailBarangScreen = (props: any) => {
           MEREK : {detailItems?.merek}
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

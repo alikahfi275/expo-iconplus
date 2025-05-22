@@ -5,6 +5,7 @@ import Icons from "../components/Icons";
 import axios from "axios";
 import { NoImage } from "../../assets/image";
 import { BASE_URL } from "../api/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CariBarangTokoScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,7 +47,7 @@ const CariBarangTokoScreen = (props: any) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
         <ModalList
@@ -264,7 +265,7 @@ const CariBarangTokoScreen = (props: any) => {
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

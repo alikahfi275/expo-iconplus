@@ -10,6 +10,7 @@ import Icons from "../components/Icons";
 import axios from "axios";
 import moment from "moment";
 import { BASE_URL } from "../api/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const KeluarRiwayatGudangScreen = (props: any) => {
   const [dataRiwayatGudang, setDataRiwayatGudang] = useState([]);
@@ -31,7 +32,7 @@ const KeluarRiwayatGudangScreen = (props: any) => {
     getListRiwayatGudang();
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#FE0000" }}>
@@ -123,7 +124,7 @@ const KeluarRiwayatGudangScreen = (props: any) => {
           <Icons name="search" type="MaterialIcons" size={40} color="black" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

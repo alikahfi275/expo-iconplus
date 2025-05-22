@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import Icons from "../components/Icons";
 import CModal from "../components/Modal";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const TambahAkunScreen = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +29,7 @@ const TambahAkunScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
 
       <View
@@ -111,7 +112,7 @@ const TambahAkunScreen = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

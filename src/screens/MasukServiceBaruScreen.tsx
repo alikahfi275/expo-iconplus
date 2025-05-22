@@ -11,6 +11,7 @@ import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { BASE_URL } from "../api/api";
 import { NoImage } from "../../assets/image";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MasukServiceBaruScreen = (props: any) => {
   const [kodeBarang, setKodeBarang] = useState("");
@@ -86,7 +87,7 @@ const MasukServiceBaruScreen = (props: any) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#1e81b0" }}>
@@ -261,7 +262,7 @@ const MasukServiceBaruScreen = (props: any) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

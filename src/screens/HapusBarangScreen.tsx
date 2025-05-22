@@ -4,6 +4,7 @@ import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
 import axios from "axios";
 import { BASE_URL } from "../api/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const HapusBarangTokoScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,7 +44,7 @@ const HapusBarangTokoScreen = (props: any) => {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
         <ModalList
@@ -148,7 +149,7 @@ const HapusBarangTokoScreen = (props: any) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

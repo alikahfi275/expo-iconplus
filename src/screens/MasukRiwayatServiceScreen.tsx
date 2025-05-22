@@ -10,6 +10,7 @@ import Icons from "../components/Icons";
 import axios from "axios";
 import { BASE_URL } from "../api/api";
 import moment from "moment";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MasukRiwayatServiceScreen = (props: any) => {
   const [dataRiwayatService, setDataRiwayatService] = useState<any>([]);
@@ -30,7 +31,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
     getListRiwayatService();
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#1e81b0" }}>
@@ -122,7 +123,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
           <Icons name="search" type="MaterialIcons" size={40} color="black" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -15,6 +15,7 @@ import { BASE_URL } from "../api/api";
 import moment from "moment";
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MasukSearchRiwayatScreen = (props: any) => {
   const isGudang = props?.route?.params?.isGudang || false;
@@ -138,7 +139,7 @@ const MasukSearchRiwayatScreen = (props: any) => {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
@@ -318,7 +319,7 @@ const MasukSearchRiwayatScreen = (props: any) => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

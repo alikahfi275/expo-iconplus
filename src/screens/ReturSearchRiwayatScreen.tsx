@@ -15,6 +15,7 @@ import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import axios from "axios";
 import moment from "moment";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturSearchRiwayatScreen = (props: any) => {
   const isGudang = props?.route?.params?.isGudang || false;
@@ -136,7 +137,7 @@ const ReturSearchRiwayatScreen = (props: any) => {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#FFFFA3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
@@ -316,7 +317,7 @@ const ReturSearchRiwayatScreen = (props: any) => {
           </View>
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

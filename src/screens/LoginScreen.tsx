@@ -9,6 +9,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import { BASE_URL } from "../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User } from "../../assets/icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("");
@@ -44,7 +45,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "white",
@@ -169,7 +170,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

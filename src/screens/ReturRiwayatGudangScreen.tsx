@@ -11,6 +11,7 @@ import axios from "axios";
 import { BASE_URL } from "../api/api";
 import Icons from "../components/Icons";
 import { useFocusEffect } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturRiwayatGudangScreen = (props: any) => {
   const [dataRiwayatGudang, setDataRiwayatGudang] = useState<any>([]);
@@ -36,7 +37,7 @@ const ReturRiwayatGudangScreen = (props: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
-      <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#1e81b0" }}>
           <Text
             style={{
@@ -162,7 +163,7 @@ const ReturRiwayatGudangScreen = (props: any) => {
         >
           <Icons name="search" type="MaterialIcons" size={40} color="black" />
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

@@ -13,6 +13,7 @@ import axios from "axios";
 import { BASE_URL } from "../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ModalListItem from "../components/ModalListItem";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturServiceScreen = () => {
   const [kodeBarang, setKodeBarang] = useState("");
@@ -123,7 +124,7 @@ const ReturServiceScreen = () => {
           setStatus(item);
         }}
       />
-      <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#FFFFA3" }}>
           <Text
             style={{
@@ -378,7 +379,7 @@ const ReturServiceScreen = () => {
             SIMPAN
           </Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

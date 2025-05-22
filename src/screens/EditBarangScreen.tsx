@@ -14,6 +14,7 @@ import axios from "axios";
 import { NoImage } from "../../assets/image";
 import { BASE_URL } from "../api/api";
 import * as ImagePicker from "expo-image-picker";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const EditBarangScreen = (props: any) => {
   const [kodeBarang, setKodeBarang] = useState("");
@@ -112,7 +113,7 @@ const EditBarangScreen = (props: any) => {
     <ScrollView
       contentContainerStyle={{ backgroundColor: "#E6F1F7", flexGrow: 1 }}
     >
-      <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
         <ModalList
           title="Kode Barang"
@@ -291,7 +292,7 @@ const EditBarangScreen = (props: any) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

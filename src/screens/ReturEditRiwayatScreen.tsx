@@ -13,6 +13,7 @@ import ModalListItem from "../components/ModalListItem";
 import axios from "axios";
 import { BASE_URL } from "../api/api";
 import moment from "moment";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturEditRiwayatScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -109,7 +110,7 @@ const ReturEditRiwayatScreen = (props: any) => {
     <ScrollView
       contentContainerStyle={{ backgroundColor: "#E6F1F7", flexGrow: 1 }}
     >
-      <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <StatusBar backgroundColor="#FFFFA3" barStyle="dark-content" />
         <ModalList
           title="Kode Barang"
@@ -420,7 +421,7 @@ const ReturEditRiwayatScreen = (props: any) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };
