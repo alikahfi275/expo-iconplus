@@ -24,7 +24,7 @@ const ListBarangReturScreen = (props: any) => {
         </Text>
         <View style={{ flex: 1 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("ReturGudang")}
+            onPress={() => navigation.navigate("ReturIcon")}
             style={{
               backgroundColor: "#FFFFA3",
               alignItems: "center",
@@ -68,7 +68,7 @@ const ListBarangReturScreen = (props: any) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("ReturRiwayatGudang")}
+            onPress={() => navigation.navigate("ReturRiwayatIcon")}
             style={{
               backgroundColor: "#1e81b0",
               alignItems: "center",

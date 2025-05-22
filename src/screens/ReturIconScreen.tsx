@@ -16,7 +16,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import ModalListItem from "../components/ModalListItem";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ReturGudangScreen = () => {
+const ReturIconScreen = () => {
   const [kodeBarang, setKodeBarang] = useState("");
   const [namaBarang, setNamaBarang] = useState<any>("");
   const [tanggalRetur, setTanggalRetur] = useState("");
@@ -24,7 +24,7 @@ const ReturGudangScreen = () => {
   const [supplier, setSupplier] = useState("");
   const [status, setStatus] = useState<any>("");
   const [catatan, setCatatan] = useState("");
-  const [dataGudang, setDataGudang] = useState([]);
+  const [dataIcon, setDataIcon] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   const [modalProsesVisible, setModalProsesVisible] = useState(false);
@@ -44,11 +44,11 @@ const ReturGudangScreen = () => {
     }
   };
 
-  const getListBarangGudang = async () => {
+  const getListBarangIcon = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}barang/gudang/list.php`);
+      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
       if (response.data.status === "success") {
-        setDataGudang(response.data.data);
+        setDataIcon(response.data.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -57,13 +57,13 @@ const ReturGudangScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getListBarangGudang();
+      getListBarangIcon();
     }, [])
   );
 
   const simpanRetur = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_retur/gudang.php`, {
+      await axios.post(`${BASE_URL}barang_retur/icon.php`, {
         nama_barang: namaBarang?.nama_barang,
         kode_barang: kodeBarang,
         tanggal_retur: `${tanggalRetur} 00:00:00`,
@@ -77,7 +77,7 @@ const ReturGudangScreen = () => {
         kode_barang: kodeBarang,
         jumlah: jumlahBarang,
         tanggal: `${tanggalRetur} 00:00:00`,
-        tipe: "gudang",
+        tipe: "icon",
         status: status?.value,
         nama_barang: namaBarang?.nama_barang,
         catatan: catatan,
@@ -105,7 +105,7 @@ const ReturGudangScreen = () => {
         title="Nama Barang"
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        items={dataGudang}
+        items={dataIcon}
         handleSelect={(item: any) => {
           setNamaBarang(item);
           setKodeBarang(item.kode_barang);
@@ -346,4 +346,4 @@ const ReturGudangScreen = () => {
   );
 };
 
-export default ReturGudangScreen;
+export default ReturIconScreen;

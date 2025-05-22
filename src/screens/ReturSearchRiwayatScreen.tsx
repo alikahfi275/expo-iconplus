@@ -18,9 +18,9 @@ import moment from "moment";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturSearchRiwayatScreen = (props: any) => {
-  const isGudang = props?.route?.params?.isGudang || false;
+  const isIcon = props?.route?.params?.isIcon || false;
 
-  const routeName = isGudang ? "gudang" : "service";
+  const routeName = isIcon ? "icon" : "service";
 
   const [modalVisible, setModalVisible] = useState(false);
   const [namaBarang, setNamaBarang] = useState<any>("");
@@ -157,7 +157,7 @@ const ReturSearchRiwayatScreen = (props: any) => {
               marginVertical: 5,
             }}
           >
-            {`Cari Riwayat Barang \n Retur ${isGudang ? "Gudang" : "Service"}`}
+            {`Cari Riwayat Barang \n Retur ${isIcon ? "Icon" : "Service"}`}
           </Text>
         </View>
         <View style={{ marginHorizontal: 20, marginTop: 20 }}>

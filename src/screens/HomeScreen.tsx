@@ -142,7 +142,7 @@ const HomeScreen = () => {
         </View>
         <TouchableOpacity
           style={{ marginHorizontal: 15, marginTop: 20 }}
-          onPress={() => navigation.navigate("StokBarangGudang")}
+          onPress={() => navigation.navigate("StokBarangIcon")}
         >
           <Image
             source={menuIcon}

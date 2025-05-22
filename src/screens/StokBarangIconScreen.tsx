@@ -18,14 +18,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const StokBarangScreen = () => {
   const navigation: any = useNavigation();
   const [showSpinner, setShowSpinner] = useState(false);
-  const [dataGudang, setDataGudang] = useState([]);
+  const [dataIcon, setDataIcon] = useState([]);
 
-  const getListBarangGudang = async () => {
+  const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/gudang/list.php`);
+      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
       if (response.data.status === "success") {
-        setDataGudang(response.data.data);
+        setDataIcon(response.data.data);
         setShowSpinner(false);
       } else {
         setShowSpinner(false);
@@ -38,7 +38,7 @@ const StokBarangScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getListBarangGudang();
+      getListBarangIcon();
     }, [])
   );
 
@@ -61,7 +61,7 @@ const StokBarangScreen = () => {
           </Text>
         </View>
         <FlatList
-          data={dataGudang}
+          data={dataIcon}
           renderItem={({ item }: any) => (
             <TouchableOpacity
               onPress={() =>

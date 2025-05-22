@@ -8,11 +8,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const HapusBarangTokoScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [dataGudang, setDataGudang] = useState([]);
+  const [dataIcon, setDataIcon] = useState([]);
   const [pickItem, setPickItem] = useState<any>(null);
 
   const isService = props?.route?.params?.isService || false;
-  const routeName = isService ? "service" : "gudang";
+  const routeName = isService ? "service" : "icon";
 
   const deleteBarang = async () => {
     try {
@@ -32,7 +32,7 @@ const HapusBarangTokoScreen = (props: any) => {
         `${BASE_URL}barang/${routeName}/list.php`
       );
       if (response.data.status === "success") {
-        setDataGudang(response.data.data);
+        setDataIcon(response.data.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -51,7 +51,7 @@ const HapusBarangTokoScreen = (props: any) => {
           title="Kode Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataGudang}
+          items={dataIcon}
           handleSelect={(item: any) => setPickItem(item)}
         />
         <Text

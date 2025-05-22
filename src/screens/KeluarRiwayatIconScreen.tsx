@@ -8,20 +8,20 @@ import {
 import React, { useEffect, useState } from "react";
 import Icons from "../components/Icons";
 import axios from "axios";
-import { BASE_URL } from "../api/api";
 import moment from "moment";
+import { BASE_URL } from "../api/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const MasukRiwayatGudangScreen = (props: any) => {
-  const [dataRiwayatGudang, setDataRiwayatGudang] = useState<any>([]);
-  const getListRiwayatGudang = async () => {
+const KeluarRiwayatIconScreen = (props: any) => {
+  const [dataRiwayatIcon, setDataRiwayatIcon] = useState([]);
+
+  const getListRiwayatIcon = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/masuk_list.php?tipe=${"gudang"}`
+        `${BASE_URL}riwayat/keluar_list.php?tipe=${"icon"}`
       );
-
       if (response.data.status === "success") {
-        setDataRiwayatGudang(response.data.data);
+        setDataRiwayatIcon(response.data.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -29,13 +29,13 @@ const MasukRiwayatGudangScreen = (props: any) => {
   };
 
   useEffect(() => {
-    getListRiwayatGudang();
+    getListRiwayatIcon();
   }, []);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
+      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-        <View style={{ backgroundColor: "#1e81b0" }}>
+        <View style={{ backgroundColor: "#FE0000" }}>
           <Text
             style={{
               textAlign: "center",
@@ -45,13 +45,13 @@ const MasukRiwayatGudangScreen = (props: any) => {
               marginVertical: 5,
             }}
           >
-            Riwayat Barang Masuk Icon
+            Riwayat Barang Keluar Icon
           </Text>
         </View>
 
         <FlatList
-          data={dataRiwayatGudang}
-          renderItem={({ item }) => (
+          data={dataRiwayatIcon}
+          renderItem={({ item }: any) => (
             <View
               style={{
                 backgroundColor: "white",
@@ -108,8 +108,8 @@ const MasukRiwayatGudangScreen = (props: any) => {
         />
         <TouchableOpacity
           onPress={() =>
-            props.navigation.navigate("MasukSearchRiwayat", {
-              isGudang: true,
+            props.navigation.navigate("KeluarSearchRiwayat", {
+              isIcon: true,
             })
           }
           style={{
@@ -128,4 +128,4 @@ const MasukRiwayatGudangScreen = (props: any) => {
   );
 };
 
-export default MasukRiwayatGudangScreen;
+export default KeluarRiwayatIconScreen;

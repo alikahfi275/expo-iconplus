@@ -12,7 +12,7 @@ const DetailBarangScreen = (props: any) => {
   const getDetailBarang = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}barang/gudang/detail.php?kode_barang=${kodeBarang}`
+        `${BASE_URL}barang/icon/detail.php?kode_barang=${kodeBarang}`
       );
 
       if (response.data.status === "success") {

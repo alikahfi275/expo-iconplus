@@ -3,28 +3,28 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "./src/screens/LoginScreen";
 
-import MasukGudang from "./src/screens/MasukGudangScreen";
+import MasukIcon from "./src/screens/MasukIconScreen";
 import MasukService from "./src/screens/MasukServiceScreen";
-import MasukRiwayatGudang from "./src/screens/MasukRiwayatGudangScreen";
+import MasukRiwayatIcon from "./src/screens/MasukRiwayatIconScreen";
 import MasukRiwayatService from "./src/screens/MasukRiwayatServiceScreen";
-import MasukGudangBaru from "./src/screens/MasukGudangBaruScreen";
+import MasukIconBaru from "./src/screens/MasukIconBaruScreen";
 import MasukSearchRiwayat from "./src/screens/MasukSearchRiwayatScreen";
 import MasukServiceBaru from "./src/screens/MasukServiceBaruScreen";
 
-import KeluarGudang from "./src/screens/KeluarGudangScreen";
+import KeluarIcon from "./src/screens/KeluarIconScreen";
 import KeluarService from "./src/screens/KeluarServiceScreen";
-import KeluarRiwayatGudang from "./src/screens/KeluarRiwayatGudangScreen";
+import KeluarRiwayatIcon from "./src/screens/KeluarRiwayatIconScreen";
 import KeluarRiwayatService from "./src/screens/KeluarRiwayatServiceScreen";
 import KeluarSearchRiwayat from "./src/screens/KeluarSearchRiwayatScreen";
 
-import ReturGudang from "./src/screens/ReturGudangScreen";
+import ReturIcon from "./src/screens/ReturIconScreen";
 import ReturService from "./src/screens/ReturServiceScreen";
-import ReturRiwayatGudang from "./src/screens/ReturRiwayatGudangScreen";
+import ReturRiwayatIcon from "./src/screens/ReturRiwayatIconScreen";
 import ReturRiwayatService from "./src/screens/ReturRiwayatServiceScreen";
 import ReturSearchRiwayat from "./src/screens/ReturSearchRiwayatScreen";
 import ReturEditRiwayat from "./src/screens/ReturEditRiwayatScreen";
 
-import StokBarangGudang from "./src/screens/StokBarangGudangScreen";
+import StokBarangIcon from "./src/screens/StokBarangIconScreen";
 import StokBarangServis from "./src/screens/StokBarangServisScreen";
 import DetailBarang from "./src/screens/DetailBarangScreen";
 import EditBarang from "./src/screens/EditBarangScreen";
@@ -63,21 +63,18 @@ export default function App() {
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="KeluarGudang" component={KeluarGudang} />
-        <Stack.Screen name="MasukGudang" component={MasukGudang} />
-        <Stack.Screen name="StokBarangGudang" component={StokBarangGudang} />
+        <Stack.Screen name="KeluarIcon" component={KeluarIcon} />
+        <Stack.Screen name="MasukIcon" component={MasukIcon} />
+        <Stack.Screen name="StokBarangIcon" component={StokBarangIcon} />
         <Stack.Screen name="StokBarangServis" component={StokBarangServis} />
-        <Stack.Screen name="ReturGudang" component={ReturGudang} />
+        <Stack.Screen name="ReturIcon" component={ReturIcon} />
         <Stack.Screen name="DetailBarang" component={DetailBarang} />
         <Stack.Screen name="EditBarang" component={EditBarang} />
         <Stack.Screen name="HapusBarang" component={HapusBarang} />
         <Stack.Screen name="CariBarang" component={CariBarang} />
-        <Stack.Screen name="MasukGudangBaru" component={MasukGudangBaru} />
+        <Stack.Screen name="MasukIconBaru" component={MasukIconBaru} />
         <Stack.Screen name="MasukServiceBaru" component={MasukServiceBaru} />
-        <Stack.Screen
-          name="MasukRiwayatGudang"
-          component={MasukRiwayatGudang}
-        />
+        <Stack.Screen name="MasukRiwayatIcon" component={MasukRiwayatIcon} />
         <Stack.Screen name="MasukService" component={MasukService} />
         <Stack.Screen
           name="ListBarangMasuk"
@@ -100,10 +97,7 @@ export default function App() {
           component={MasukSearchRiwayat}
         />
         <Stack.Screen name="KeluarService" component={KeluarService} />
-        <Stack.Screen
-          name="KeluarRiwayatGudang"
-          component={KeluarRiwayatGudang}
-        />
+        <Stack.Screen name="KeluarRiwayatIcon" component={KeluarRiwayatIcon} />
         <Stack.Screen
           name="KeluarRiwayatService"
           component={KeluarRiwayatService}
@@ -113,10 +107,7 @@ export default function App() {
           component={KeluarSearchRiwayat}
         />
         <Stack.Screen name="ReturService" component={ReturService} />
-        <Stack.Screen
-          name="ReturRiwayatGudang"
-          component={ReturRiwayatGudang}
-        />
+        <Stack.Screen name="ReturRiwayatIcon" component={ReturRiwayatIcon} />
         <Stack.Screen
           name="ReturRiwayatService"
           component={ReturRiwayatService}

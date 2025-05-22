@@ -5,37 +5,40 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import Icons from "../components/Icons";
-import axios from "axios";
+import React, { useState } from "react";
 import moment from "moment";
+import axios from "axios";
 import { BASE_URL } from "../api/api";
+import Icons from "../components/Icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const KeluarRiwayatGudangScreen = (props: any) => {
-  const [dataRiwayatGudang, setDataRiwayatGudang] = useState([]);
-
-  const getListRiwayatGudang = async () => {
+const ReturRiwayatIconScreen = (props: any) => {
+  const [dataRiwayatIcon, setDataRiwayatIcon] = useState<any>([]);
+  const getListRiwayatIcon = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/keluar_list.php?tipe=${"gudang"}`
+        `${BASE_URL}riwayat/retur_list_Icon.php`
       );
+
       if (response.data.status === "success") {
-        setDataRiwayatGudang(response.data.data);
+        setDataRiwayatIcon(response.data.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
-  useEffect(() => {
-    getListRiwayatGudang();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getListRiwayatIcon();
+    }, [])
+  );
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
-      <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-        <View style={{ backgroundColor: "#FE0000" }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
+        <View style={{ backgroundColor: "#1e81b0" }}>
           <Text
             style={{
               textAlign: "center",
@@ -45,13 +48,13 @@ const KeluarRiwayatGudangScreen = (props: any) => {
               marginVertical: 5,
             }}
           >
-            Riwayat Barang Keluar Icon
+            Riwayat Barang Retur Icon
           </Text>
         </View>
 
         <FlatList
-          data={dataRiwayatGudang}
-          renderItem={({ item }: any) => (
+          data={dataRiwayatIcon}
+          renderItem={({ item }) => (
             <View
               style={{
                 backgroundColor: "white",
@@ -71,7 +74,7 @@ const KeluarRiwayatGudangScreen = (props: any) => {
                   backgroundColor: "#1e81b0",
                 }}
               >
-                Tanggal Masuk : {moment(item?.tanggal).format("L")}
+                Tanggal Retur : {moment(item?.tanggal).format("L")}
               </Text>
               <Text
                 style={{
@@ -101,15 +104,35 @@ const KeluarRiwayatGudangScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Jumlah Masuk : {item?.jumlah}
+                Jumlah Retur : {item?.jumlah}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "black",
+                  padding: 5,
+                }}
+              >
+                Supplier : {item?.supplier}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "black",
+                  padding: 5,
+                }}
+              >
+                Status : {item?.status}
               </Text>
             </View>
           )}
         />
         <TouchableOpacity
           onPress={() =>
-            props.navigation.navigate("KeluarSearchRiwayat", {
-              isGudang: true,
+            props.navigation.navigate("ReturEditRiwayat", {
+              isIcon: true,
             })
           }
           style={{
@@ -121,11 +144,28 @@ const KeluarRiwayatGudangScreen = (props: any) => {
             borderRadius: 50,
           }}
         >
+          <Icons name="pencil" size={40} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            props.navigation.navigate("ReturSearchRiwayat", {
+              isIcon: true,
+            })
+          }
+          style={{
+            position: "absolute",
+            bottom: 20,
+            right: 100,
+            padding: 10,
+            backgroundColor: "#FFFFA3",
+            borderRadius: 50,
+          }}
+        >
           <Icons name="search" type="MaterialIcons" size={40} color="black" />
         </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
 
-export default KeluarRiwayatGudangScreen;
+export default ReturRiwayatIconScreen;

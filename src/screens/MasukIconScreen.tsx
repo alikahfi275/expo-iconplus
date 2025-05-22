@@ -6,63 +6,60 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+
 import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay";
 import { BASE_URL } from "../api/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const KeluarGudangScreen = (props: any) => {
+const MasukIconScreen = (props: any) => {
+  const navigation: any = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [itemPick, setItemPick] = useState<any>({});
   const [jumlah, setJumlah] = useState(0);
-  const [tangglaMasuk, setTangglaMasuk] = useState("");
 
-  const [dataGudang, setDataGudang] = useState([]);
+  const [dataIcon, setDataIcon] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
 
   const updateJumlah = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_keluar/gudang.php`, {
+      await axios.post(`${BASE_URL}barang_masuk/icon.php`, {
         kode_barang: itemPick.kode_barang,
-        jumlah: jumlah,
+        jumlah_masuk: jumlah,
       });
-
-      await axios.post(`${BASE_URL}riwayat/keluar.php`, {
+      await axios.post(`${BASE_URL}riwayat/masuk.php`, {
         kode_barang: itemPick.kode_barang,
-        jumlah: itemPick.stok - jumlah,
-        tipe: "gudang",
-        tanggal: `${tangglaMasuk} 00:00:00`,
+        jumlah: itemPick.stok + jumlah,
+        tipe: "icon",
         nama_barang: itemPick.nama_barang,
       });
-
       setJumlah(0);
-      setTangglaMasuk("");
       setItemPick({});
-
-      getListBarangGudang();
+      getListBarangIcon();
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
   const handleIncrease = () => {
-    setJumlah((prev) => prev + 1);
+    setJumlah((prev) => prev + 1); // Menambah 1
   };
 
   const handleDecrease = () => {
     if (jumlah > 0) {
-      setJumlah((prev) => prev - 1);
+      setJumlah((prev) => prev - 1); // Mengurangi 1, dengan pengecekan agar tidak negatif
     }
   };
 
-  const getListBarangGudang = async () => {
+  const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/gudang/list.php`);
+      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
       if (response.data.status === "success") {
-        setDataGudang(response.data.data);
+        setDataIcon(response.data.data);
         setShowSpinner(false);
       } else {
         setShowSpinner(false);
@@ -74,7 +71,7 @@ const KeluarGudangScreen = (props: any) => {
   };
 
   useEffect(() => {
-    getListBarangGudang();
+    getListBarangIcon();
   }, []);
 
   return (
@@ -86,14 +83,14 @@ const KeluarGudangScreen = (props: any) => {
           title="Nama Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataGudang}
+          items={dataIcon}
           handleSelect={(item: any) => {
             setItemPick(item);
             setModalVisible(false);
             setJumlah(Number(item.stok));
           }}
         />
-        <View style={{ backgroundColor: "#FE0000" }}>
+        <View style={{ backgroundColor: "#1e81b0" }}>
           <Text
             style={{
               textAlign: "center",
@@ -103,7 +100,7 @@ const KeluarGudangScreen = (props: any) => {
               marginVertical: 5,
             }}
           >
-            Barang Keluar Icon
+            Barang Masuk Icon
           </Text>
         </View>
 
@@ -161,7 +158,7 @@ const KeluarGudangScreen = (props: any) => {
                 style={{
                   paddingVertical: 10,
                   paddingHorizontal: 25,
-                  backgroundColor: "#FE0000",
+                  backgroundColor: "#1e81b0",
                   borderRadius: 5,
                 }}
               >
@@ -192,7 +189,7 @@ const KeluarGudangScreen = (props: any) => {
                 style={{
                   paddingVertical: 10,
                   paddingHorizontal: 25,
-                  backgroundColor: "#FE0000",
+                  backgroundColor: "#1e81b0",
                   borderRadius: 5,
                 }}
               >
@@ -204,35 +201,13 @@ const KeluarGudangScreen = (props: any) => {
               </TouchableOpacity>
             </View>
           </View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-              color: "black",
-              marginTop: 20,
-            }}
-          >
-            Tanggal Masuk Barang
-          </Text>
-          <TextInput
-            style={{
-              borderBottomWidth: 1,
-              borderColor: "black",
-              paddingVertical: 5,
-              marginBottom: 10,
-            }}
-            value={tangglaMasuk}
-            keyboardType="numeric"
-            onChangeText={(text) => setTangglaMasuk(text)}
-            placeholder="Tanggal Masuk Contoh (2025-04-29)"
-          />
         </View>
         <TouchableOpacity
           onPress={updateJumlah}
           style={{
             marginHorizontal: 20,
             marginBottom: 20,
-            backgroundColor: "#FE0000",
+            backgroundColor: "#1e81b0",
             alignItems: "center",
             paddingVertical: 10,
             marginTop: 20,
@@ -242,9 +217,23 @@ const KeluarGudangScreen = (props: any) => {
             SIMPAN
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MasukIconBaru")}
+          style={{
+            marginHorizontal: 20,
+            marginBottom: 20,
+            backgroundColor: "#1e81b0",
+            alignItems: "center",
+            paddingVertical: 10,
+          }}
+        >
+          <Text style={{ fontSize: 16, color: "black", fontWeight: "600" }}>
+            BARANG MASUK ICON BARU
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
-export default KeluarGudangScreen;
+export default MasukIconScreen;

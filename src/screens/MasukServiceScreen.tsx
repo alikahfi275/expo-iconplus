@@ -38,7 +38,7 @@ const MasukServiceScreen = (props: any) => {
       });
       setJumlah(0);
       setItemPick({});
-      getListBarangGudang();
+      getListBarangIcon();
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -54,7 +54,7 @@ const MasukServiceScreen = (props: any) => {
     }
   };
 
-  const getListBarangGudang = async () => {
+  const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
       const response = await axios.get(`${BASE_URL}barang/service/list.php`);
@@ -71,7 +71,7 @@ const MasukServiceScreen = (props: any) => {
   };
 
   useEffect(() => {
-    getListBarangGudang();
+    getListBarangIcon();
   }, []);
 
   return (

@@ -17,7 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const ReturEditRiwayatScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [dataGudang, setDataGudang] = useState([]);
+  const [dataIcon, setDataIcon] = useState([]);
   const [pickItem, setPickItem] = useState<any>(null);
   const [kodeBarang, setKodeBarang] = useState("");
   const [namaBarang, setNamaBarang] = useState("");
@@ -31,15 +31,15 @@ const ReturEditRiwayatScreen = (props: any) => {
 
   const isService = props?.route?.params?.isService || false;
 
-  const routeName = isService ? "service" : "gudang";
-  const getListRiwayatGudang = async () => {
+  const routeName = isService ? "service" : "icon";
+  const getListRiwayatIcon = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}riwayat/retur_list_${routeName}.php`
       );
 
       if (response.data.status === "success") {
-        setDataGudang(response.data.data);
+        setDataIcon(response.data.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -47,7 +47,7 @@ const ReturEditRiwayatScreen = (props: any) => {
   };
 
   useEffect(() => {
-    getListRiwayatGudang();
+    getListRiwayatIcon();
   }, []);
 
   const statusProses = [
@@ -101,7 +101,7 @@ const ReturEditRiwayatScreen = (props: any) => {
       setPickItem(null);
       setTanggalKembali("");
 
-      getListRiwayatGudang();
+      getListRiwayatIcon();
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -116,7 +116,7 @@ const ReturEditRiwayatScreen = (props: any) => {
           title="Kode Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataGudang}
+          items={dataIcon}
           handleSelect={(item: any) => handleSelect(item)}
         />
         <ModalListItem

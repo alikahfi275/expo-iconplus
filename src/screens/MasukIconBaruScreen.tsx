@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import { NoImage } from "../../assets/image";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const MasukGudangBaruScreen = (props: any) => {
+const MasukIconBaruScreen = (props: any) => {
   const [kodeBarang, setKodeBarang] = useState("");
   const [namaBarang, setNamaBarang] = useState("");
   const [jumlahBarang, setJumlahBarang] = useState(0);
@@ -23,7 +23,7 @@ const MasukGudangBaruScreen = (props: any) => {
 
   const addItems = async () => {
     try {
-      await axios.post(`${BASE_URL}barang/gudang/create.php`, {
+      await axios.post(`${BASE_URL}barang/icon/create.php`, {
         kode_barang: kodeBarang,
         nama_barang: namaBarang,
         stok: jumlahBarang,
@@ -34,7 +34,7 @@ const MasukGudangBaruScreen = (props: any) => {
       await axios.post(`${BASE_URL}riwayat/masuk.php`, {
         kode_barang: kodeBarang,
         jumlah: jumlahBarang,
-        tipe: "gudang",
+        tipe: "icon",
         nama_barang: namaBarang,
       });
       setGambar(null);
@@ -266,4 +266,4 @@ const MasukGudangBaruScreen = (props: any) => {
   );
 };
 
-export default MasukGudangBaruScreen;
+export default MasukIconBaruScreen;

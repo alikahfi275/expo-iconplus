@@ -15,7 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const KeluarRiwayatServiceScreen = (props: any) => {
   const [dataRiwayatService, setDataRiwayatService] = useState([]);
 
-  const getListRiwayatGudang = async () => {
+  const getListRiwayatIcon = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}riwayat/keluar_list.php?tipe=${"service"}`
@@ -29,7 +29,7 @@ const KeluarRiwayatServiceScreen = (props: any) => {
   };
 
   useEffect(() => {
-    getListRiwayatGudang();
+    getListRiwayatIcon();
   }, []);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>

@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const CariBarangTokoScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [gambar, setGambar] = useState(null);
-  const [dataGudang, setDataGudang] = useState([]);
+  const [dataIcon, setDataIcon] = useState([]);
   const [pickItem, setPickItem] = useState<any>(null);
   const [kodeBarang, setKodeBarang] = useState("");
   const [stokBarang, setStokBarang] = useState("");
@@ -28,14 +28,14 @@ const CariBarangTokoScreen = (props: any) => {
   };
 
   const isService = props?.route?.params?.isService || false;
-  const routeName = isService ? "service" : "gudang";
+  const routeName = isService ? "service" : "icon";
   const getListBarang = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}barang/${routeName}/list.php`
       );
       if (response.data.status === "success") {
-        setDataGudang(response.data.data);
+        setDataIcon(response.data.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -54,7 +54,7 @@ const CariBarangTokoScreen = (props: any) => {
           title="Nama Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataGudang}
+          items={dataIcon}
           handleSelect={(item: any) => setPickItem(item)}
         />
         <Text

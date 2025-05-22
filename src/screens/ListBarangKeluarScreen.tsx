@@ -24,7 +24,7 @@ const ListBarangKeluarScreen = (props: any) => {
         </Text>
         <View style={{ flex: 1 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("KeluarGudang")}
+            onPress={() => navigation.navigate("KeluarIcon")}
             style={{
               backgroundColor: "#D3FED6",
               alignItems: "center",
@@ -68,7 +68,7 @@ const ListBarangKeluarScreen = (props: any) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("KeluarRiwayatGudang")}
+            onPress={() => navigation.navigate("KeluarRiwayatIcon")}
             style={{
               backgroundColor: "#FE0000",
               alignItems: "center",
