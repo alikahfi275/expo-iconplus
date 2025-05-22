@@ -23,19 +23,19 @@ const MasukIconBaruScreen = (props: any) => {
 
   const addItems = async () => {
     try {
-      await axios.post(`${BASE_URL}barang/icon/create.php`, {
-        kode_barang: kodeBarang,
-        nama_barang: namaBarang,
+      await axios.post(`${BASE_URL}barang_icon/create.php`, {
+        kd_barang_icon: kodeBarang,
+        nm_barang: namaBarang,
         stok: jumlahBarang,
-        satuan: satuanBarang,
         merek: merekBarang,
+        satuan: satuanBarang,
         gambar: gambar,
       });
-      await axios.post(`${BASE_URL}riwayat/masuk.php`, {
-        kode_barang: kodeBarang,
-        jumlah: jumlahBarang,
-        tipe: "icon",
-        nama_barang: namaBarang,
+
+      await axios.post(`${BASE_URL}barang_masuk_icon/create.php`, {
+        nm_barang: namaBarang,
+        tanggal_masuk: new Date().toISOString().slice(0, 10),
+        jumlah_masuk: jumlahBarang,
       });
       setGambar(null);
       setKodeBarang("");
@@ -49,12 +49,12 @@ const MasukIconBaruScreen = (props: any) => {
   };
 
   const handleIncrease = () => {
-    setJumlahBarang((prev) => prev + 1); // Menambah 1
+    setJumlahBarang((prev) => prev + 1);
   };
 
   const handleDecrease = () => {
     if (jumlahBarang > 0) {
-      setJumlahBarang((prev) => prev - 1); // Mengurangi 1, dengan pengecekan agar tidak negatif
+      setJumlahBarang((prev) => prev - 1);
     }
   };
 

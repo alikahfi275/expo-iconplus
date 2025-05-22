@@ -26,15 +26,14 @@ const MasukIconScreen = (props: any) => {
 
   const updateJumlah = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_masuk/icon.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah_masuk: jumlah,
+      await axios.post(`${BASE_URL}barang_icon/update.php`, {
+        kd_barang_icon: itemPick.kd_barang_icon,
+        stok: jumlah,
       });
-      await axios.post(`${BASE_URL}riwayat/masuk.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah: itemPick.stok + jumlah,
-        tipe: "icon",
-        nama_barang: itemPick.nama_barang,
+      await axios.post(`${BASE_URL}barang_masuk_icon/create.php`, {
+        nm_barang: itemPick.nm_barang,
+        tanggal_masuk: new Date().toISOString().slice(0, 10),
+        jumlah_masuk: jumlah - itemPick.stok,
       });
       setJumlah(0);
       setItemPick({});
@@ -45,19 +44,19 @@ const MasukIconScreen = (props: any) => {
   };
 
   const handleIncrease = () => {
-    setJumlah((prev) => prev + 1); // Menambah 1
+    setJumlah((prev) => prev + 1);
   };
 
   const handleDecrease = () => {
     if (jumlah > 0) {
-      setJumlah((prev) => prev - 1); // Mengurangi 1, dengan pengecekan agar tidak negatif
+      setJumlah((prev) => prev - 1);
     }
   };
 
   const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_icon/list.php`);
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
         setShowSpinner(false);
@@ -128,11 +127,11 @@ const MasukIconScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: itemPick.nama_barang ? "600" : "300",
-                color: itemPick.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: itemPick.nm_barang ? "600" : "300",
+                color: itemPick.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {itemPick.nama_barang ? itemPick.nama_barang : "Nama Barang"}
+              {itemPick.nm_barang ? itemPick.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
