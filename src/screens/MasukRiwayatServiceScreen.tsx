@@ -17,7 +17,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
   const getListRiwayatService = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/masuk_list.php?tipe=${"service"}`
+        `${BASE_URL}barang_masuk_service/list.php`
       );
       if (response.data.status === "success") {
         setDataRiwayatService(response.data.data);
@@ -70,7 +70,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
                   backgroundColor: "#1e81b0",
                 }}
               >
-                Tanggal Masuk : {moment(item?.tanggal).format("L")}
+                Tanggal Masuk : {moment(item?.tanggal_masuk).format("L")}
               </Text>
               <Text
                 style={{
@@ -80,7 +80,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Kode Barang : {item?.kode_barang}
+                Kode Barang : {item?.kd_barang_masuk}
               </Text>
               <Text
                 style={{
@@ -90,7 +90,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Nama Barang : {item?.nama_barang}
+                Nama Barang : {item?.nm_barang}
               </Text>
               <Text
                 style={{
@@ -100,7 +100,7 @@ const MasukRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Jumlah Masuk : {item?.jumlah}
+                Jumlah Masuk : {item?.jumlah_masuk}
               </Text>
             </View>
           )}

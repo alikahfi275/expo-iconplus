@@ -85,7 +85,9 @@ const MasukSearchRiwayatScreen = (props: any) => {
 
   const getListRiwayat = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}barang_masuk_icon/list.php`);
+      const response = await axios.get(
+        `${BASE_URL}barang_masuk_${isIcon ? "icon" : "service"}/list.php`
+      );
       if (response.data.status === "success") {
         const data = response.data.data;
 
