@@ -27,6 +27,7 @@ const EditBarangScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [dataIcon, setDataIcon] = useState([]);
   const [pickItem, setPickItem] = useState<any>(null);
+  const [kategoriBarang, setKategoriBarang] = useState("");
 
   const isService = props?.route?.params?.isService || false;
   const routeName = isService ? "service" : "icon";
@@ -61,7 +62,7 @@ const EditBarangScreen = (props: any) => {
   const getListBarang = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}barang/${routeName}/list.php`
+        `${BASE_URL}barang_${routeName}/list.php`
       );
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
@@ -73,14 +74,25 @@ const EditBarangScreen = (props: any) => {
 
   const updateBarang = async () => {
     try {
-      await axios.post(`${BASE_URL}barang/${routeName}/update.php`, {
-        kode_barang: kodeBarang,
-        nama_barang: namaBarang,
-        stok: stokBarang,
-        satuan: satuanBarang,
-        merek: merekBarang,
-        gambar: gambar,
-      });
+      if (isService) {
+        await axios.post(`${BASE_URL}barang_service/update.php`, {
+          kd_barang_service: kodeBarang,
+          nm_barang: namaBarang,
+          stok: stokBarang,
+          kategori: kategoriBarang,
+          gambar: gambar,
+        });
+      } else {
+        await axios.post(`${BASE_URL}barang_icon/update.php`, {
+          kd_barang_icon: kodeBarang,
+          nm_barang: namaBarang,
+          stok: stokBarang,
+          merek: merekBarang,
+          satuan: satuanBarang,
+          gambar: gambar,
+        });
+      }
+
       setPickItem(null);
       setKodeBarang("");
       setNamaBarang("");
@@ -88,6 +100,7 @@ const EditBarangScreen = (props: any) => {
       setMerekBarang("");
       setSatuanBarang("");
       setGambar(null);
+      setKategoriBarang("");
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -99,13 +112,16 @@ const EditBarangScreen = (props: any) => {
 
   const handleSelect = (item: any) => {
     setPickItem(item);
-    if (item.kode_barang) {
-      setKodeBarang(item.kode_barang);
-      setNamaBarang(item.nama_barang);
-      setStokBarang(item.stok);
-      setMerekBarang(item.merek);
-      setSatuanBarang(item.satuan);
-      setGambar(item.gambar);
+    if (item.kd_barang_icon || item.kd_barang_service) {
+      setKodeBarang(
+        item?.kd_barang_icon ? item.kd_barang_icon : item.kd_barang_service
+      );
+      setNamaBarang(item?.nm_barang);
+      setStokBarang(item?.stok);
+      setMerekBarang(item?.merek || "");
+      setSatuanBarang(item?.satuan || "");
+      setGambar(item?.gambar);
+      setKategoriBarang(item?.kategori || "");
     }
   };
 
@@ -160,11 +176,15 @@ const EditBarangScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: pickItem?.kode_barang ? "600" : "300",
-                color: pickItem?.kode_barang ? "black" : "#4c4c4c",
+                fontWeight: "600",
+                color: "black",
               }}
             >
-              {pickItem?.kode_barang ? pickItem?.kode_barang : "0"}
+              {pickItem?.kd_barang_icon
+                ? pickItem?.kd_barang_icon
+                : pickItem?.kd_barang_service
+                ? pickItem?.kd_barang_service
+                : "Kode Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -212,36 +232,55 @@ const EditBarangScreen = (props: any) => {
             placeholder="Masukan Stok Barang"
           />
 
-          <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
-            Merek Barang
-          </Text>
-          <TextInput
-            style={{
-              borderBottomWidth: 1,
-              borderColor: "black",
-              paddingVertical: 5,
-              marginBottom: 10,
-            }}
-            value={merekBarang}
-            onChangeText={setMerekBarang}
-            placeholder="Masukan Merek Barang"
-          />
-
-          <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
-            Satuan Barang
-          </Text>
-          <TextInput
-            style={{
-              borderBottomWidth: 1,
-              borderColor: "black",
-              paddingVertical: 5,
-              marginBottom: 10,
-            }}
-            value={satuanBarang}
-            onChangeText={setSatuanBarang}
-            placeholder="Masukan Satuan Barang"
-          />
-
+          {isService ? (
+            <>
+              <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
+                Kategori Barang
+              </Text>
+              <TextInput
+                style={{
+                  borderBottomWidth: 1,
+                  borderColor: "black",
+                  paddingVertical: 5,
+                  marginBottom: 10,
+                }}
+                value={kategoriBarang}
+                onChangeText={setKategoriBarang}
+                placeholder="Masukan Kategori Barang"
+              />
+            </>
+          ) : (
+            <>
+              <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
+                Merek Barang
+              </Text>
+              <TextInput
+                style={{
+                  borderBottomWidth: 1,
+                  borderColor: "black",
+                  paddingVertical: 5,
+                  marginBottom: 10,
+                }}
+                value={merekBarang}
+                onChangeText={setMerekBarang}
+                placeholder="Masukan Merek Barang"
+              />
+              <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
+                Satuan Barang
+              </Text>
+              <TextInput
+                style={{
+                  borderBottomWidth: 1,
+                  borderColor: "black",
+                  paddingVertical: 5,
+                  marginBottom: 10,
+                }}
+                value={satuanBarang}
+                onChangeText={setSatuanBarang}
+                placeholder="Masukan Satuan Barang"
+              />
+            </>
+          )}
           <Image
             source={gambar ? { uri: gambar } : NoImage}
             style={{
