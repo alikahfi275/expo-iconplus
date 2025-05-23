@@ -23,7 +23,7 @@ const StokBarangServisScreen = () => {
   const getListBarangService = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/service/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_service/list.php`);
       if (response.data.status === "success") {
         setDataService(response.data.data);
         setShowSpinner(false);
@@ -84,7 +84,7 @@ const StokBarangServisScreen = () => {
                 <Text
                   style={{ fontSize: 20, fontWeight: "500", color: "black" }}
                 >
-                  {item.nama_barang}
+                  {item.nm_barang}
                 </Text>
               </View>
 
