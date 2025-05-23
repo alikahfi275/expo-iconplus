@@ -16,9 +16,15 @@ const HapusBarangTokoScreen = (props: any) => {
 
   const deleteBarang = async () => {
     try {
-      await axios.post(`${BASE_URL}barang/${routeName}/delete.php`, {
-        kode_barang: pickItem?.kode_barang,
-      });
+      if (pickItem?.kd_barang_icon) {
+        await axios.post(`${BASE_URL}barang_icon/delete.php`, {
+          kd_barang_icon: pickItem.kd_barang_icon,
+        });
+      } else {
+        await axios.post(`${BASE_URL}barang_service/delete.php`, {
+          kd_barang_service: pickItem.kd_barang_service,
+        });
+      }
       getListBarang();
       setPickItem(null);
     } catch (error) {
@@ -29,7 +35,7 @@ const HapusBarangTokoScreen = (props: any) => {
   const getListBarang = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}barang/${routeName}/list.php`
+        `${BASE_URL}barang_${routeName}/list.php`
       );
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
@@ -92,11 +98,15 @@ const HapusBarangTokoScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: pickItem?.kode_barang ? "600" : "300",
-                color: pickItem?.kode_barang ? "black" : "#4c4c4c",
+                fontWeight: pickItem?.nm_barang ? "600" : "300",
+                color: pickItem?.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {pickItem?.kode_barang ? pickItem?.kode_barang : "0"}
+              {pickItem?.kd_barang_icon
+                ? pickItem?.kd_barang_icon
+                : pickItem?.kd_barang_service
+                ? pickItem?.kd_barang_service
+                : "Kode Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -119,13 +129,13 @@ const HapusBarangTokoScreen = (props: any) => {
           <Text
             style={{
               fontSize: 25,
-              fontWeight: pickItem?.nama_barang ? "600" : "300",
-              color: pickItem?.nama_barang ? "black" : "#4c4c4c",
+              fontWeight: pickItem?.nm_barang ? "600" : "300",
+              color: pickItem?.nm_barang ? "black" : "#4c4c4c",
               marginTop: 5,
               textAlign: "center",
             }}
           >
-            {pickItem?.nama_barang ? pickItem?.nama_barang : "Nama Barang"}
+            {pickItem?.nm_barang ? pickItem?.nm_barang : "Nama Barang"}
           </Text>
         </View>
         <TouchableOpacity

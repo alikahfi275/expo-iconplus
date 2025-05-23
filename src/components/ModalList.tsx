@@ -57,7 +57,11 @@ const ModalList = (props: any) => {
                 <Text
                   style={{ fontSize: 16, color: "black", textAlign: "center" }}
                 >
-                  {title === "Kode Barang" ? item.kode_barang : item.nm_barang}
+                  {title === "Kode Barang"
+                    ? item.kd_barang_icon
+                      ? item.kd_barang_icon
+                      : item.kd_barang_service
+                    : item.nm_barang}
                 </Text>
               </TouchableOpacity>
             ))}
