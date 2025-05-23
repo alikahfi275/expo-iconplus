@@ -117,7 +117,7 @@ const HomeScreen = () => {
             <Image
               source={menuMasuk}
               style={{ height: 140, width: 110 }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -127,7 +127,7 @@ const HomeScreen = () => {
             <Image
               source={menuKeluar}
               style={{ height: 140, width: 110 }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -136,7 +136,7 @@ const HomeScreen = () => {
             <Image
               source={menuRetur}
               style={{ height: 140, width: 110 }}
-              resizeMode="contain"
+              contentFit="contain"
             />
           </TouchableOpacity>
         </View>
@@ -147,7 +147,7 @@ const HomeScreen = () => {
           <Image
             source={menuIcon}
             style={{ height: 200, width: "auto" }}
-            resizeMode="stretch"
+            contentFit="stretch"
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -157,7 +157,7 @@ const HomeScreen = () => {
           <Image
             source={menuServis}
             style={{ height: 200, width: "auto" }}
-            resizeMode="stretch"
+            contentFit="stretch"
           />
         </TouchableOpacity>
         <CModal modalVisible={showModal} setModalVisible={setShowModal} />
