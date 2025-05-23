@@ -20,8 +20,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const MasukSearchRiwayatScreen = (props: any) => {
   const isIcon = props?.route?.params?.isIcon || false;
 
-  const routeName = isIcon ? "icon" : "service";
-
   const [modalVisible, setModalVisible] = useState(false);
   const [namaBarang, setNamaBarang] = useState<any>("");
 
@@ -31,7 +29,6 @@ const MasukSearchRiwayatScreen = (props: any) => {
   const [dataRiwayat, setDataRiwayat] = useState<any>([]);
 
   const generatePDF = async () => {
-    // Membuat HTML dari array
     let htmlContent =
       '<h1>Inventory Report</h1><table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">';
     htmlContent +=
@@ -52,59 +49,47 @@ const MasukSearchRiwayatScreen = (props: any) => {
     htmlContent += "</table>";
 
     try {
-      // Generate file PDF dari HTML
       const { uri } = await Print.printToFileAsync({
         html: htmlContent,
       });
       console.log("PDF disimpan di:", uri);
 
-      // Bisa langsung share file PDF
       await Sharing.shareAsync(uri);
     } catch (error) {
       console.error("Gagal generate PDF:", error);
     }
   };
 
-  const searchByFilter = async () => {
-    try {
-      const response = await axios.post(`${BASE_URL}riwayat/masuk_filter.php`, {
-        dari_tanggal: `${tanggalDari} 00:00:00`,
-        ke_tanggal: `${tanggalSampai} 23:59:59`,
-        nama_barang: namaBarang?.nama_barang,
-        tipe: routeName,
-      });
-
-      console.log(response.data);
-
-      if (response.data.status === "success") {
-        setDataResult(response.data.data);
-      }
-      setTanggalDari("");
-      setTanggalSampai("");
-      setNamaBarang("");
-    } catch (error) {
-      console.log("Error fetching data:", error);
+  const searchByFilter = () => {
+    if (!tanggalDari || !tanggalSampai || !namaBarang?.nm_barang) {
+      alert("Semua filter (tanggal dan nama barang) harus diisi.");
+      return;
     }
+
+    const filtered = dataRiwayat.filter((item: any) => {
+      const itemTanggal = moment(item.tanggal_masuk).startOf("day");
+      const dari = moment(tanggalDari).startOf("day");
+      const sampai = moment(tanggalSampai).endOf("day");
+
+      const cocokNama =
+        item.nm_barang.trim().toLowerCase() ===
+        namaBarang.nm_barang.trim().toLowerCase();
+
+      const cocokTanggal = itemTanggal.isBetween(dari, sampai, undefined, "[]");
+
+      return cocokNama && cocokTanggal;
+    });
+
+    setDataResult(filtered);
   };
 
   const getListRiwayat = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}riwayat/masuk_list.php?tipe=${routeName}`
-      );
+      const response = await axios.get(`${BASE_URL}barang_masuk_icon/list.php`);
       if (response.data.status === "success") {
         const data = response.data.data;
 
-        const seen = new Set();
-        const filteredData = data.filter((item: any) => {
-          if (seen.has(item.nama_barang)) {
-            return false;
-          }
-          seen.add(item.nama_barang);
-          return true;
-        });
-
-        setDataRiwayat(filteredData);
+        setDataRiwayat(data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -114,6 +99,15 @@ const MasukSearchRiwayatScreen = (props: any) => {
   useEffect(() => {
     getListRiwayat();
   }, []);
+
+  const seen = new Set();
+  const filteredData = dataRiwayat.filter((item: any) => {
+    if (seen.has(item.nm_barang)) {
+      return false;
+    }
+    seen.add(item.nm_barang);
+    return true;
+  });
 
   const renderItem = ({ item }: any) => (
     <View
@@ -127,10 +121,10 @@ const MasukSearchRiwayatScreen = (props: any) => {
       }}
     >
       <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {item.kode_barang}
+        {item.kd_barang_masuk}
       </Text>
       <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {item.nama_barang}
+        {item.nm_barang}
       </Text>
       <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
         {moment(item.tanggal_masuk).format("YYYY-MM-DD")}
@@ -146,7 +140,7 @@ const MasukSearchRiwayatScreen = (props: any) => {
           title="Nama Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataRiwayat}
+          items={filteredData}
           handleSelect={(item: any) => setNamaBarang(item)}
         />
         <View style={{ backgroundColor: "#1e81b0" }}>
@@ -220,13 +214,11 @@ const MasukSearchRiwayatScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: namaBarang?.nama_barang ? "600" : "300",
-                color: namaBarang?.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: namaBarang?.nm_barang ? "600" : "300",
+                color: namaBarang?.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {namaBarang?.nama_barang
-                ? namaBarang?.nama_barang
-                : "Nama Barang"}
+              {namaBarang?.nm_barang ? namaBarang?.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -314,7 +306,7 @@ const MasukSearchRiwayatScreen = (props: any) => {
             <FlatList
               data={dataResult}
               renderItem={renderItem}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.kd_barang_masuk.toString()}
             />
           </View>
         </ScrollView>
