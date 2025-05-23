@@ -16,23 +16,29 @@ const CariBarangTokoScreen = (props: any) => {
   const [stokBarang, setStokBarang] = useState("");
   const [merekBarang, setMerekBarang] = useState("");
   const [satuanBarang, setSatuanBarang] = useState("");
+  const [kategoriBarang, setKategoriBarang] = useState("");
 
+  const isService = props?.route?.params?.isService || false;
+  const routeName = isService ? "service" : "icon";
   const cariBarang = () => {
     if (pickItem) {
-      setKodeBarang(pickItem.kode_barang);
+      setKodeBarang(
+        pickItem.kd_barang_icon
+          ? pickItem.kd_barang_icon
+          : pickItem.kd_barang_service
+      );
       setStokBarang(pickItem.stok);
       setMerekBarang(pickItem.merek);
       setSatuanBarang(pickItem.satuan);
       setGambar(pickItem.gambar);
+      setKategoriBarang(pickItem.kategori);
     }
   };
 
-  const isService = props?.route?.params?.isService || false;
-  const routeName = isService ? "service" : "icon";
   const getListBarang = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}barang/${routeName}/list.php`
+        `${BASE_URL}barang_${routeName}/list.php`
       );
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
@@ -95,11 +101,11 @@ const CariBarangTokoScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: pickItem?.nama_barang ? "600" : "300",
-                color: pickItem?.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: pickItem?.nm_barang ? "600" : "300",
+                color: pickItem?.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {pickItem?.nama_barang ? pickItem?.nama_barang : "Nama Barang"}
+              {pickItem?.nm_barang ? pickItem?.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -202,68 +208,107 @@ const CariBarangTokoScreen = (props: any) => {
             {stokBarang ? stokBarang : "Stok Barang"}
           </Text>
         </View>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "600",
-            color: "black",
-            marginLeft: 20,
-            textDecorationLine: "underline",
-            marginVertical: 5,
-          }}
-        >
-          Merek Barang
-        </Text>
-        <View
-          style={{
-            backgroundColor: "white",
-            marginHorizontal: 20,
-            paddingVertical: 5,
-            borderWidth: 2,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: merekBarang ? "600" : "300",
-              color: merekBarang ? "black" : "#4c4c4c",
-              textAlign: "center",
-            }}
-          >
-            {merekBarang ? merekBarang : "Merek Barang"}
-          </Text>
-        </View>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: "600",
-            color: "black",
-            marginLeft: 20,
-            textDecorationLine: "underline",
-            marginVertical: 5,
-          }}
-        >
-          Satuan Barang
-        </Text>
-        <View
-          style={{
-            backgroundColor: "white",
-            marginHorizontal: 20,
-            paddingVertical: 5,
-            borderWidth: 2,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: satuanBarang ? "600" : "300",
-              color: satuanBarang ? "black" : "#4c4c4c",
-              textAlign: "center",
-            }}
-          >
-            {satuanBarang ? satuanBarang : "Satuan Barang"}
-          </Text>
-        </View>
+
+        {isService ? (
+          <>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "600",
+                color: "black",
+                marginLeft: 20,
+                textDecorationLine: "underline",
+                marginVertical: 5,
+              }}
+            >
+              Kategori Barang
+            </Text>
+            <View
+              style={{
+                backgroundColor: "white",
+                marginHorizontal: 20,
+                paddingVertical: 5,
+                borderWidth: 2,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: kategoriBarang ? "600" : "300",
+                  color: kategoriBarang ? "black" : "#4c4c4c",
+                  textAlign: "center",
+                }}
+              >
+                {kategoriBarang ? kategoriBarang : "Satuan Barang"}
+              </Text>
+            </View>
+          </>
+        ) : (
+          <>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "600",
+                color: "black",
+                marginLeft: 20,
+                textDecorationLine: "underline",
+                marginVertical: 5,
+              }}
+            >
+              Merek Barang
+            </Text>
+            <View
+              style={{
+                backgroundColor: "white",
+                marginHorizontal: 20,
+                paddingVertical: 5,
+                borderWidth: 2,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: merekBarang ? "600" : "300",
+                  color: merekBarang ? "black" : "#4c4c4c",
+                  textAlign: "center",
+                }}
+              >
+                {merekBarang ? merekBarang : "Merek Barang"}
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: "600",
+                color: "black",
+                marginLeft: 20,
+                textDecorationLine: "underline",
+                marginVertical: 5,
+              }}
+            >
+              Satuan Barang
+            </Text>
+            <View
+              style={{
+                backgroundColor: "white",
+                marginHorizontal: 20,
+                paddingVertical: 5,
+                borderWidth: 2,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: satuanBarang ? "600" : "300",
+                  color: satuanBarang ? "black" : "#4c4c4c",
+                  textAlign: "center",
+                }}
+              >
+                {satuanBarang ? satuanBarang : "Satuan Barang"}
+              </Text>
+            </View>
+          </>
+        )}
       </View>
     </SafeAreaView>
   );
