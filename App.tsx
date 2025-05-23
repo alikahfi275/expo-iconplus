@@ -42,82 +42,114 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [isLogin, setIsLogin] = useState(false);
-
-  async function getData(key: string) {
-    const jsonValue = await AsyncStorage.getItem(key);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  }
+  const [isLogin, setIsLogin] = useState<string | null>(null); // null berarti belum dicek
+  const [isLoading, setIsLoading] = useState(true); // untuk tunggu pengecekan selesai
 
   useEffect(() => {
-    getData("isLogin").then((res) => {
-      setIsLogin(res);
-    });
+    const getData = async () => {
+      try {
+        const data = await AsyncStorage.getItem("isLogin");
+        setIsLogin(data);
+      } catch (error) {
+        console.error("Error fetching login state", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getData();
   }, []);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={isLogin ? "Home" : "Login"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="KeluarIcon" component={KeluarIcon} />
-        <Stack.Screen name="MasukIcon" component={MasukIcon} />
-        <Stack.Screen name="StokBarangIcon" component={StokBarangIcon} />
-        <Stack.Screen name="StokBarangServis" component={StokBarangServis} />
-        <Stack.Screen name="ReturIcon" component={ReturIcon} />
-        <Stack.Screen name="DetailBarang" component={DetailBarang} />
-        <Stack.Screen name="EditBarang" component={EditBarang} />
-        <Stack.Screen name="HapusBarang" component={HapusBarang} />
-        <Stack.Screen name="CariBarang" component={CariBarang} />
-        <Stack.Screen name="MasukIconBaru" component={MasukIconBaru} />
-        <Stack.Screen name="MasukServiceBaru" component={MasukServiceBaru} />
-        <Stack.Screen name="MasukRiwayatIcon" component={MasukRiwayatIcon} />
-        <Stack.Screen name="MasukService" component={MasukService} />
-        <Stack.Screen
-          name="ListBarangMasuk"
-          component={ListBarangMasukScreen}
-        />
-        <Stack.Screen
-          name="ListBarangKeluar"
-          component={ListBarangKeluarScreen}
-        />
-        <Stack.Screen
-          name="ListBarangRetur"
-          component={ListBarangReturScreen}
-        />
-        <Stack.Screen
-          name="MasukRiwayatService"
-          component={MasukRiwayatService}
-        />
-        <Stack.Screen
-          name="MasukSearchRiwayat"
-          component={MasukSearchRiwayat}
-        />
-        <Stack.Screen name="KeluarService" component={KeluarService} />
-        <Stack.Screen name="KeluarRiwayatIcon" component={KeluarRiwayatIcon} />
-        <Stack.Screen
-          name="KeluarRiwayatService"
-          component={KeluarRiwayatService}
-        />
-        <Stack.Screen
-          name="KeluarSearchRiwayat"
-          component={KeluarSearchRiwayat}
-        />
-        <Stack.Screen name="ReturService" component={ReturService} />
-        <Stack.Screen name="ReturRiwayatIcon" component={ReturRiwayatIcon} />
-        <Stack.Screen
-          name="ReturRiwayatService"
-          component={ReturRiwayatService}
-        />
-        <Stack.Screen
-          name="ReturSearchRiwayat"
-          component={ReturSearchRiwayat}
-        />
-        <Stack.Screen name="ReturEditRiwayat" component={ReturEditRiwayat} />
-        <Stack.Screen name="TambahAkun" component={TambahAkun} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {isLogin === "true" ? (
+          <>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="KeluarIcon" component={KeluarIcon} />
+            <Stack.Screen name="MasukIcon" component={MasukIcon} />
+            <Stack.Screen name="StokBarangIcon" component={StokBarangIcon} />
+            <Stack.Screen
+              name="StokBarangServis"
+              component={StokBarangServis}
+            />
+            <Stack.Screen name="ReturIcon" component={ReturIcon} />
+            <Stack.Screen name="DetailBarang" component={DetailBarang} />
+            <Stack.Screen name="EditBarang" component={EditBarang} />
+            <Stack.Screen name="HapusBarang" component={HapusBarang} />
+            <Stack.Screen name="CariBarang" component={CariBarang} />
+            <Stack.Screen name="MasukIconBaru" component={MasukIconBaru} />
+            <Stack.Screen
+              name="MasukServiceBaru"
+              component={MasukServiceBaru}
+            />
+            <Stack.Screen
+              name="MasukRiwayatIcon"
+              component={MasukRiwayatIcon}
+            />
+            <Stack.Screen name="MasukService" component={MasukService} />
+            <Stack.Screen
+              name="ListBarangMasuk"
+              component={ListBarangMasukScreen}
+            />
+            <Stack.Screen
+              name="ListBarangKeluar"
+              component={ListBarangKeluarScreen}
+            />
+            <Stack.Screen
+              name="ListBarangRetur"
+              component={ListBarangReturScreen}
+            />
+            <Stack.Screen
+              name="MasukRiwayatService"
+              component={MasukRiwayatService}
+            />
+            <Stack.Screen
+              name="MasukSearchRiwayat"
+              component={MasukSearchRiwayat}
+            />
+            <Stack.Screen name="KeluarService" component={KeluarService} />
+            <Stack.Screen
+              name="KeluarRiwayatIcon"
+              component={KeluarRiwayatIcon}
+            />
+            <Stack.Screen
+              name="KeluarRiwayatService"
+              component={KeluarRiwayatService}
+            />
+            <Stack.Screen
+              name="KeluarSearchRiwayat"
+              component={KeluarSearchRiwayat}
+            />
+            <Stack.Screen name="ReturService" component={ReturService} />
+            <Stack.Screen
+              name="ReturRiwayatIcon"
+              component={ReturRiwayatIcon}
+            />
+            <Stack.Screen
+              name="ReturRiwayatService"
+              component={ReturRiwayatService}
+            />
+            <Stack.Screen
+              name="ReturSearchRiwayat"
+              component={ReturSearchRiwayat}
+            />
+            <Stack.Screen
+              name="ReturEditRiwayat"
+              component={ReturEditRiwayat}
+            />
+            <Stack.Screen name="TambahAkun" component={TambahAkun} />
+            <Stack.Screen name="Login" component={Login} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Home" component={Home} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

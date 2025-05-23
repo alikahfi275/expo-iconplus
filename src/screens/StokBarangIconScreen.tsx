@@ -23,7 +23,9 @@ const StokBarangScreen = () => {
   const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_icon/list.php`);
+      console.log(response.data);
+
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
         setShowSpinner(false);
@@ -66,7 +68,7 @@ const StokBarangScreen = () => {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("DetailBarang", {
-                  kodeBarang: item?.kode_barang,
+                  kodeBarang: item?.kd_barang_icon,
                 })
               }
               style={{
@@ -86,7 +88,7 @@ const StokBarangScreen = () => {
                 <Text
                   style={{ fontSize: 20, fontWeight: "500", color: "black" }}
                 >
-                  {item.nama_barang}
+                  {item.nm_barang}
                 </Text>
               </View>
 
