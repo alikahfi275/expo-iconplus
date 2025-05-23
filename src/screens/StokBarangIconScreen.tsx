@@ -24,7 +24,6 @@ const StokBarangScreen = () => {
     setShowSpinner(true);
     try {
       const response = await axios.get(`${BASE_URL}barang_icon/list.php`);
-      console.log(response.data);
 
       if (response.data.status === "success") {
         setDataIcon(response.data.data);

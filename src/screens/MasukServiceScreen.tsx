@@ -26,15 +26,14 @@ const MasukServiceScreen = (props: any) => {
 
   const updateJumlah = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_masuk/service.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah_masuk: jumlah,
+      await axios.post(`${BASE_URL}barang_service/update.php`, {
+        kd_barang_service: itemPick.kd_barang_service,
+        stok: jumlah,
       });
-      await axios.post(`${BASE_URL}riwayat/masuk.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah: itemPick.stok + jumlah,
-        tipe: "service",
-        nama_barang: itemPick.nama_barang,
+      await axios.post(`${BASE_URL}barang_masuk_service/create.php`, {
+        nm_barang: itemPick.nm_barang,
+        jumlah_masuk: jumlah - itemPick.stok,
+        tanggal_masuk: new Date().toISOString().slice(0, 10),
       });
       setJumlah(0);
       setItemPick({});
@@ -57,7 +56,7 @@ const MasukServiceScreen = (props: any) => {
   const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/service/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_service/list.php`);
       if (response.data.status === "success") {
         setDataService(response.data.data);
         setShowSpinner(false);
@@ -128,11 +127,11 @@ const MasukServiceScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: itemPick.nama_barang ? "600" : "300",
-                color: itemPick.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: itemPick.nm_barang ? "600" : "300",
+                color: itemPick.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {itemPick.nama_barang ? itemPick.nama_barang : "Nama Barang"}
+              {itemPick.nm_barang ? itemPick.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"

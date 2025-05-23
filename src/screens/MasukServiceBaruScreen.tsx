@@ -17,44 +17,42 @@ const MasukServiceBaruScreen = (props: any) => {
   const [kodeBarang, setKodeBarang] = useState("");
   const [namaBarang, setNamaBarang] = useState("");
   const [jumlahBarang, setJumlahBarang] = useState(0);
-  const [merekBarang, setMerekBarang] = useState("");
-  const [satuanBarang, setSatuanBarang] = useState("");
+  const [kategoriBarang, setKategoriBarang] = useState("");
   const [gambar, setGambar] = useState(null);
 
   const addItems = async () => {
+    console.log(gambar);
+
     try {
-      await axios.post(`${BASE_URL}barang/service/create.php`, {
-        kode_barang: kodeBarang,
-        nama_barang: namaBarang,
+      await axios.post(`${BASE_URL}barang_service/create.php`, {
+        kd_barang_service: kodeBarang,
+        nm_barang: namaBarang,
         stok: jumlahBarang,
-        satuan: satuanBarang,
-        merek: merekBarang,
+        kategori: kategoriBarang,
         gambar: gambar,
       });
-      await axios.post(`${BASE_URL}riwayat/masuk.php`, {
-        kode_barang: kodeBarang,
-        jumlah: jumlahBarang,
-        tipe: "service",
-        nama_barang: namaBarang,
+      await axios.post(`${BASE_URL}barang_masuk_service/create.php`, {
+        nm_barang: namaBarang,
+        tanggal_masuk: new Date().toISOString().slice(0, 10),
+        jumlah_masuk: jumlahBarang,
       });
       setGambar(null);
       setKodeBarang("");
       setNamaBarang("");
       setJumlahBarang(0);
-      setMerekBarang("");
-      setSatuanBarang("");
+      setKategoriBarang("");
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
   const handleIncrease = () => {
-    setJumlahBarang((prev) => prev + 1); // Menambah 1
+    setJumlahBarang((prev) => prev + 1);
   };
 
   const handleDecrease = () => {
     if (jumlahBarang > 0) {
-      setJumlahBarang((prev) => prev - 1); // Mengurangi 1, dengan pengecekan agar tidak negatif
+      setJumlahBarang((prev) => prev - 1);
     }
   };
 
@@ -197,7 +195,7 @@ const MasukServiceBaruScreen = (props: any) => {
 
         <View style={{ marginHorizontal: 20, marginTop: 10 }}>
           <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
-            Merek Barang
+            Kategori Barang
           </Text>
           <TextInput
             style={{
@@ -206,26 +204,9 @@ const MasukServiceBaruScreen = (props: any) => {
               paddingVertical: 5,
               marginBottom: 10,
             }}
-            value={merekBarang}
-            onChangeText={(text) => setMerekBarang(text)}
-            placeholder="Masukan Merek Barang"
-          />
-        </View>
-
-        <View style={{ marginHorizontal: 20, marginTop: 10 }}>
-          <Text style={{ fontSize: 16, fontWeight: "600", color: "black" }}>
-            Satuan Barang
-          </Text>
-          <TextInput
-            style={{
-              borderBottomWidth: 1,
-              borderColor: "black",
-              paddingVertical: 5,
-              marginBottom: 10,
-            }}
-            value={satuanBarang}
-            onChangeText={(text) => setSatuanBarang(text)}
-            placeholder="Masukan Satuan Barang"
+            value={kategoriBarang}
+            onChangeText={(text) => setKategoriBarang(text)}
+            placeholder="Masukan Kategori Barang"
           />
         </View>
         <Image
