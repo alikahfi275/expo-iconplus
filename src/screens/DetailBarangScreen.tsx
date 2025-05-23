@@ -1,9 +1,10 @@
-import { View, Text, StatusBar, Image } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NoImage } from "../../assets/image";
 import { BASE_URL } from "../api/api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const DetailBarangScreen = (props: any) => {
   const { kodeBarang } = props?.route?.params;

@@ -3,7 +3,6 @@ import {
   Text,
   StatusBar,
   TextInput,
-  Image,
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
@@ -12,6 +11,7 @@ import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import { NoImage } from "../../assets/image";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const MasukIconBaruScreen = (props: any) => {
   const [kodeBarang, setKodeBarang] = useState("");

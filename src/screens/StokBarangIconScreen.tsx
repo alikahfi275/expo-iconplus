@@ -3,7 +3,6 @@ import {
   Text,
   StatusBar,
   FlatList,
-  Image,
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
@@ -14,6 +13,7 @@ import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay";
 import { NoImage } from "../../assets/image";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const StokBarangScreen = () => {
   const navigation: any = useNavigation();

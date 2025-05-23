@@ -28,7 +28,8 @@
     "react-native": "0.79.2",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-safe-area-context": "5.4.0",
-    "react-native-screens": "~4.10.0"
+    "react-native-screens": "~4.10.0",
+    "expo-image": "~2.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

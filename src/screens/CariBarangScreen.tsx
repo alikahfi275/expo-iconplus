@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import React, { useEffect, useState } from "react";
 import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
@@ -6,6 +6,7 @@ import axios from "axios";
 import { NoImage } from "../../assets/image";
 import { BASE_URL } from "../api/api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const CariBarangTokoScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);

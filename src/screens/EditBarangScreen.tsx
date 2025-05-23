@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   ScrollView,
   StatusBar,
@@ -15,6 +14,7 @@ import { NoImage } from "../../assets/image";
 import { BASE_URL } from "../api/api";
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const EditBarangScreen = (props: any) => {
   const [kodeBarang, setKodeBarang] = useState("");

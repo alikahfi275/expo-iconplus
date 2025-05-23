@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StatusBar,
-  Image,
   TouchableOpacity,
   Platform,
   PermissionsAndroid,
@@ -20,6 +19,7 @@ import {
   menuServis,
 } from "../../assets/image";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const HomeScreen = () => {
   const navigation: any = useNavigation();

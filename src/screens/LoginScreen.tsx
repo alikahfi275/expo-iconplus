@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, TouchableOpacity, Image } from "react-native";
+import { View, Text, StatusBar, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import SHA1 from "crypto-js/sha1";
 import { TextInput } from "react-native-gesture-handler";
@@ -10,6 +10,7 @@ import { BASE_URL } from "../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User } from "../../assets/icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("");
