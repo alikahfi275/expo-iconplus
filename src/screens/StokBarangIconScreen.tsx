@@ -67,7 +67,7 @@ const StokBarangScreen = () => {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("DetailBarang", {
-                  kodeBarang: item?.kd_barang_icon,
+                  items: item,
                 })
               }
               style={{

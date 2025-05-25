@@ -5,11 +5,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay";
 import { BASE_URL } from "../api/api";
@@ -69,9 +69,11 @@ const MasukIconScreen = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    getListBarangIcon();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getListBarangIcon();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
