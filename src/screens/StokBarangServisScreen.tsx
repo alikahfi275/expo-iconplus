@@ -65,7 +65,7 @@ const StokBarangServisScreen = () => {
           renderItem={({ item }: any) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("DetailBarang", { data: item })
+                navigation.navigate("DetailBarang", { items: item })
               }
               style={{
                 backgroundColor: "white",

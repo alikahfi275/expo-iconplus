@@ -73,22 +73,39 @@ const DetailBarangScreen = (props: any) => {
               marginVertical: 5,
             }}
           >
-            STOK : {items?.stok} / {items?.satuan}
+            STOK : {items?.stok} {items?.satuan ? `/${items?.satuan}` : ""}
           </Text>
         </View>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "black",
-            marginVertical: 5,
-            textAlign: "center",
-            marginHorizontal: 20,
-            marginTop: 20,
-          }}
-        >
-          MEREK : {items?.merek}
-        </Text>
+        {items?.merek && (
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "black",
+              marginVertical: 5,
+              textAlign: "center",
+              marginHorizontal: 20,
+              marginTop: 20,
+            }}
+          >
+            MEREK : {items?.merek}
+          </Text>
+        )}
+        {items?.kategori && (
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              color: "black",
+              marginVertical: 5,
+              textAlign: "center",
+              marginHorizontal: 20,
+              marginTop: 20,
+            }}
+          >
+            Kategori : {items?.kategori}
+          </Text>
+        )}
       </View>
     </SafeAreaView>
   );
