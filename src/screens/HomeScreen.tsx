@@ -8,9 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import Icons from "../components/Icons";
 import CModal from "../components/Modal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   menuIcon,
   menuKeluar,
@@ -24,7 +22,6 @@ import { Image } from "expo-image";
 const HomeScreen = () => {
   const navigation: any = useNavigation();
   const [showModal, setShowModal] = useState(false);
-  const [role, setRole] = useState<string | null>(null);
 
   const requestPermissions = async () => {
     if (Platform.OS === "android") {
@@ -62,10 +59,6 @@ const HomeScreen = () => {
     }, 1000);
   }, []);
 
-  useEffect(() => {
-    AsyncStorage.getItem("role").then(setRole);
-  }, []);
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
@@ -73,12 +66,9 @@ const HomeScreen = () => {
         <View
           style={{
             backgroundColor: "#1e81b0",
-            flexDirection: "row",
-            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <View style={{ marginHorizontal: 15 }} />
           <Text
             style={{
               textAlign: "center",
@@ -90,17 +80,6 @@ const HomeScreen = () => {
           >
             BERANDA UTAMA
           </Text>
-          <Icons
-            name={role === "superadmin" ? "account-plus" : "logout"}
-            size={30}
-            color="black"
-            style={{ marginRight: 15 }}
-            onPress={() => {
-              role === "superadmin"
-                ? navigation.navigate("TambahAkun")
-                : setShowModal(true);
-            }}
-          />
         </View>
 
         <View
@@ -144,21 +123,13 @@ const HomeScreen = () => {
           style={{ marginHorizontal: 15, marginTop: 20 }}
           onPress={() => navigation.navigate("StokBarangIcon")}
         >
-          <Image
-            source={menuIcon}
-            style={{ height: 200, width: "auto" }}
-            contentFit="stretch"
-          />
+          <Image source={menuIcon} style={{ height: 200, width: "auto" }} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ marginHorizontal: 15, marginTop: 20 }}
           onPress={() => navigation.navigate("StokBarangServis")}
         >
-          <Image
-            source={menuServis}
-            style={{ height: 200, width: "auto" }}
-            contentFit="stretch"
-          />
+          <Image source={menuServis} style={{ height: 200, width: "auto" }} />
         </TouchableOpacity>
         <CModal modalVisible={showModal} setModalVisible={setShowModal} />
       </View>

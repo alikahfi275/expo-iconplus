@@ -32,7 +32,6 @@ const LoginScreen = () => {
       if (response.data.status === "success") {
         navigation.navigate("Home");
         setMassage("");
-        AsyncStorage.setItem("role", response.data.user.role);
         AsyncStorage.setItem("isLogin", "true");
         setShowSpinner(false);
       } else {
