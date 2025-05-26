@@ -3,7 +3,6 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  StatusBar,
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
@@ -104,7 +103,6 @@ const ReturServiceScreen = () => {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-      <StatusBar backgroundColor="#FFFFA3" barStyle="dark-content" />
       <ModalList
         title="Nama Barang"
         modalVisible={modalVisible}

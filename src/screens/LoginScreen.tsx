@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import SHA1 from "crypto-js/sha1";
 import { TextInput } from "react-native-gesture-handler";
@@ -52,7 +52,7 @@ const LoginScreen = () => {
       }}
     >
       <Spinner visible={showSpinner} textContent={"Loading..."} color="white" />
-      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
+
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View
           style={{

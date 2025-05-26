@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Icons from "../components/Icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -45,7 +39,7 @@ const StokBarangServisScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Spinner visible={showSpinner} textContent={"Loading..."} color="white" />
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
+
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#BFFEC6" }}>
           <Text

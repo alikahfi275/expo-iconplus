@@ -2,7 +2,6 @@ import {
   View,
   Text,
   ScrollView,
-  StatusBar,
   TextInput,
   TouchableOpacity,
 } from "react-native";
@@ -111,7 +110,6 @@ const ReturEditRiwayatScreen = (props: any) => {
       contentContainerStyle={{ backgroundColor: "#E6F1F7", flexGrow: 1 }}
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-        <StatusBar backgroundColor="#FFFFA3" barStyle="dark-content" />
         <ModalList
           title="Kode Barang"
           modalVisible={modalVisible}

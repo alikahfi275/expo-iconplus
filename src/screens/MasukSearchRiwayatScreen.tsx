@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StatusBar,
   TextInput,
   TouchableOpacity,
   FlatList,
@@ -136,7 +135,6 @@ const MasukSearchRiwayatScreen = (props: any) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
           title="Nama Barang"

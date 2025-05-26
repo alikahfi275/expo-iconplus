@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  StatusBar,
 } from "react-native";
 import Icons from "../components/Icons";
 import ModalList from "../components/ModalList";
@@ -130,7 +129,6 @@ const EditBarangScreen = (props: any) => {
       contentContainerStyle={{ backgroundColor: "#E6F1F7", flexGrow: 1 }}
     >
       <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-        <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
         <ModalList
           title="Kode Barang"
           modalVisible={modalVisible}

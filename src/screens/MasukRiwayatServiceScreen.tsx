@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icons from "../components/Icons";
 import axios from "axios";
@@ -32,7 +26,6 @@ const MasukRiwayatServiceScreen = (props: any) => {
   }, []);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#1e81b0" }}>
           <Text

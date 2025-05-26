@@ -3,7 +3,6 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  StatusBar,
   Image,
   ScrollView,
 } from "react-native";
@@ -100,7 +99,6 @@ const ReturIconScreen = () => {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-      <StatusBar backgroundColor="#FFFFA3" barStyle="dark-content" />
       <ModalList
         title="Nama Barang"
         modalVisible={modalVisible}

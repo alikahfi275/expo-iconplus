@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
@@ -52,7 +52,6 @@ const HapusBarangTokoScreen = (props: any) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-        <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
         <ModalList
           title="Kode Barang"
           modalVisible={modalVisible}

@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StatusBar,
   TouchableOpacity,
   Platform,
   PermissionsAndroid,
@@ -61,7 +60,6 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1 }}>
         <View
           style={{

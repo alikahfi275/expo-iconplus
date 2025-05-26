@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { BASE_URL } from "../api/api";
 import axios from "axios";
@@ -88,7 +82,6 @@ const MasukIconBaruScreen = (props: any) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#1e81b0" }}>
           <Text

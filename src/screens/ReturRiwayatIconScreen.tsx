@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -36,7 +30,6 @@ const ReturRiwayatIconScreen = (props: any) => {
   );
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View style={{ backgroundColor: "#1e81b0" }}>
           <Text

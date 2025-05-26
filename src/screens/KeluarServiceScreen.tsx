@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
@@ -78,7 +72,7 @@ const KeluarServiceScreen = (props: any) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Spinner visible={showSpinner} textContent={"Loading..."} color="white" />
-      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
+
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
           title="Nama Barang"

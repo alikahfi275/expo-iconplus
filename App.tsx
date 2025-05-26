@@ -37,6 +37,7 @@ import Home from "./src/screens/HomeScreen";
 
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
         initialRouteName={isLogin === "true" ? "Home" : "Login"}

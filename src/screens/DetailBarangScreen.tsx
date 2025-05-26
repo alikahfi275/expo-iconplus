@@ -1,4 +1,4 @@
-import { View, Text, StatusBar } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import { NoImage } from "../../assets/image";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,7 +9,6 @@ const DetailBarangScreen = (props: any) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <View
           style={{
