@@ -20,8 +20,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const KeluarSearchRiwayatScreen = (props: any) => {
   const isIcon = props?.route?.params?.isIcon || false;
 
-  const routeName = isIcon ? "icon" : "service";
-
   const [modalVisible, setModalVisible] = useState(false);
   const [namaBarang, setNamaBarang] = useState<any>("");
 
@@ -65,49 +63,38 @@ const KeluarSearchRiwayatScreen = (props: any) => {
     }
   };
 
-  const searchByFilter = async () => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}riwayat/keluar_filter.php`,
-        {
-          dari_tanggal: `${tanggalDari} 00:00:00`,
-          ke_tanggal: `${tanggalSampai} 23:59:59`,
-          nama_barang: namaBarang?.nama_barang,
-          tipe: routeName,
-        }
-      );
-
-      console.log(response.data);
-
-      if (response.data.status === "success") {
-        setDataResult(response.data.data);
-      }
-      setTanggalDari("");
-      setTanggalSampai("");
-      setNamaBarang("");
-    } catch (error) {
-      console.log("Error fetching data:", error);
+  const searchByFilter = () => {
+    if (!tanggalDari || !tanggalSampai || !namaBarang?.nm_barang) {
+      alert("Semua filter (tanggal dan nama barang) harus diisi.");
+      return;
     }
+
+    const filtered = dataRiwayat.filter((item: any) => {
+      const itemTanggal = moment(item.tanggal_masuk).startOf("day");
+      const dari = moment(tanggalDari).startOf("day");
+      const sampai = moment(tanggalSampai).endOf("day");
+
+      const cocokNama =
+        item.nm_barang.trim().toLowerCase() ===
+        namaBarang.nm_barang.trim().toLowerCase();
+
+      const cocokTanggal = itemTanggal.isBetween(dari, sampai, undefined, "[]");
+
+      return cocokNama && cocokTanggal;
+    });
+
+    setDataResult(filtered);
   };
 
   const getListRiwayat = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/keluar_list.php?tipe=${routeName}`
+        `${BASE_URL}barang_keluar_${isIcon ? "icon" : "service"}/list.php`
       );
-      if (response.data.status === "success") {
-        const data = response.data.data;
-
-        const seen = new Set();
-        const filteredData = data.filter((item: any) => {
-          if (seen.has(item.nama_barang)) {
-            return false;
-          }
-          seen.add(item.nama_barang);
-          return true;
-        });
-
-        setDataRiwayat(filteredData);
+      if (isIcon) {
+        setDataRiwayat(response.data.data);
+      } else {
+        setDataRiwayat(response.data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -117,6 +104,15 @@ const KeluarSearchRiwayatScreen = (props: any) => {
   useEffect(() => {
     getListRiwayat();
   }, []);
+
+  const seen = new Set();
+  const filteredData = dataRiwayat.filter((item: any) => {
+    if (seen.has(item.nm_barang)) {
+      return false;
+    }
+    seen.add(item.nm_barang);
+    return true;
+  });
 
   const renderItem = ({ item }: any) => (
     <View
@@ -130,26 +126,26 @@ const KeluarSearchRiwayatScreen = (props: any) => {
       }}
     >
       <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {item.kode_barang}
+        {item.kd_barang_keluar}
       </Text>
       <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {item.nama_barang}
+        {item.nm_barang}
       </Text>
       <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {moment(item.tanggal).format("YYYY-MM-DD")}
+        {moment(item.tanggal_keluar).format("YYYY-MM-DD")}
       </Text>
     </View>
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
       <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
           title="Nama Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataRiwayat}
+          items={filteredData}
           handleSelect={(item: any) => setNamaBarang(item)}
         />
         <View style={{ backgroundColor: "#1e81b0" }}>
@@ -223,13 +219,11 @@ const KeluarSearchRiwayatScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: namaBarang?.nama_barang ? "600" : "300",
-                color: namaBarang?.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: namaBarang?.nm_barang ? "600" : "300",
+                color: namaBarang?.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {namaBarang?.nama_barang
-                ? namaBarang?.nama_barang
-                : "Nama Barang"}
+              {namaBarang?.nm_barang ? namaBarang?.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
