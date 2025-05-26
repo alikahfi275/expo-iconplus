@@ -5,12 +5,13 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Icons from "../components/Icons";
 import axios from "axios";
 import moment from "moment";
 import { BASE_URL } from "../api/api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 
 const KeluarRiwayatIconScreen = (props: any) => {
   const [dataRiwayatIcon, setDataRiwayatIcon] = useState([]);
@@ -18,7 +19,7 @@ const KeluarRiwayatIconScreen = (props: any) => {
   const getListRiwayatIcon = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/keluar_list.php?tipe=${"icon"}`
+        `${BASE_URL}barang_keluar_icon/list.php`
       );
       if (response.data.status === "success") {
         setDataRiwayatIcon(response.data.data);
@@ -28,9 +29,11 @@ const KeluarRiwayatIconScreen = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    getListRiwayatIcon();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getListRiwayatIcon();
+    }, [])
+  );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
@@ -71,7 +74,7 @@ const KeluarRiwayatIconScreen = (props: any) => {
                   backgroundColor: "#1e81b0",
                 }}
               >
-                Tanggal Masuk : {moment(item?.tanggal).format("L")}
+                Tanggal Keluar : {moment(item?.tanggal_keluar).format("L")}
               </Text>
               <Text
                 style={{
@@ -81,7 +84,7 @@ const KeluarRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Kode Barang : {item?.kode_barang}
+                Kode Barang Keluar : {item?.kd_barang_keluar}
               </Text>
               <Text
                 style={{
@@ -91,7 +94,7 @@ const KeluarRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Nama Barang : {item?.nama_barang}
+                Nama Barang : {item?.nm_barang}
               </Text>
               <Text
                 style={{
@@ -101,7 +104,7 @@ const KeluarRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Jumlah Masuk : {item?.jumlah}
+                Jumlah Keluar : {item?.jumlah_keluar}
               </Text>
             </View>
           )}
