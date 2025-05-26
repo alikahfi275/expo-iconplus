@@ -15,22 +15,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const KeluarRiwayatServiceScreen = (props: any) => {
   const [dataRiwayatService, setDataRiwayatService] = useState([]);
 
-  const getListRiwayatIcon = async () => {
+  const getListRiwayatService = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/keluar_list.php?tipe=${"service"}`
+        `${BASE_URL}barang_keluar_service/list.php`
       );
-      if (response.data.status === "success") {
-        setDataRiwayatService(response.data.data);
-      }
+      setDataRiwayatService(response.data);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-    getListRiwayatIcon();
+    getListRiwayatService();
   }, []);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
@@ -57,7 +56,6 @@ const KeluarRiwayatServiceScreen = (props: any) => {
                 backgroundColor: "white",
                 borderWidth: 2,
                 marginHorizontal: 20,
-
                 marginTop: 25,
               }}
             >
@@ -71,7 +69,7 @@ const KeluarRiwayatServiceScreen = (props: any) => {
                   backgroundColor: "#1e81b0",
                 }}
               >
-                Tanggal Masuk : {moment(item?.tanggal).format("L")}
+                Tanggal Keluar : {moment(item?.tanggal_keluar).format("L")}
               </Text>
               <Text
                 style={{
@@ -81,7 +79,7 @@ const KeluarRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Kode Barang : {item?.kode_barang}
+                Kode Barang : {item?.kd_barang_keluar}
               </Text>
               <Text
                 style={{
@@ -91,7 +89,7 @@ const KeluarRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Nama Barang : {item?.nama_barang}
+                Nama Barang : {item?.nm_barang}
               </Text>
               <Text
                 style={{
@@ -101,7 +99,7 @@ const KeluarRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Jumlah Masuk : {item?.jumlah}
+                Jumlah Keluar : {item?.jumlah_keluar}
               </Text>
             </View>
           )}
