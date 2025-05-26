@@ -17,28 +17,26 @@ const KeluarServiceScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [itemPick, setItemPick] = useState<any>({});
   const [jumlah, setJumlah] = useState(0);
-  const [tangglaMasuk, setTangglaMasuk] = useState("");
+  const [tanggalKeluar, setTanggalKeluar] = useState("");
 
   const [dataService, setDataService] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
 
   const updateJumlah = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_keluar/service.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah: jumlah,
+      await axios.post(`${BASE_URL}barang_service/update.php`, {
+        kd_barang_service: itemPick.kd_barang_service,
+        stok: jumlah,
       });
 
-      await axios.post(`${BASE_URL}riwayat/keluar.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah: itemPick.stok - jumlah,
-        tipe: "service",
-        tanggal: `${tangglaMasuk} 00:00:00`,
-        nama_barang: itemPick.nama_barang,
+      await axios.post(`${BASE_URL}barang_keluar_service/create.php`, {
+        nm_barang: itemPick.nm_barang,
+        jumlah_keluar: itemPick.stok - jumlah,
+        tanggal_keluar: tanggalKeluar,
       });
 
       setJumlah(0);
-      setTangglaMasuk("");
+      setTanggalKeluar("");
       setItemPick({});
 
       getListBarangService();
@@ -60,7 +58,7 @@ const KeluarServiceScreen = (props: any) => {
   const getListBarangService = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/service/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_service/list.php`);
       if (response.data.status === "success") {
         setDataService(response.data.data);
         setShowSpinner(false);
@@ -80,7 +78,7 @@ const KeluarServiceScreen = (props: any) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Spinner visible={showSpinner} textContent={"Loading..."} color="white" />
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
+      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
           title="Nama Barang"
@@ -131,11 +129,11 @@ const KeluarServiceScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: itemPick.nama_barang ? "600" : "300",
-                color: itemPick.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: itemPick.nm_barang ? "600" : "300",
+                color: itemPick.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {itemPick.nama_barang ? itemPick.nama_barang : "Nama Barang"}
+              {itemPick.nm_barang ? itemPick.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -212,7 +210,7 @@ const KeluarServiceScreen = (props: any) => {
               marginTop: 20,
             }}
           >
-            Tanggal Masuk Barang
+            Tanggal Keluar Barang
           </Text>
           <TextInput
             style={{
@@ -221,10 +219,10 @@ const KeluarServiceScreen = (props: any) => {
               paddingVertical: 5,
               marginBottom: 10,
             }}
-            value={tangglaMasuk}
+            value={tanggalKeluar}
             keyboardType="numeric"
-            onChangeText={(text) => setTangglaMasuk(text)}
-            placeholder="Tanggal Masuk Barang"
+            onChangeText={(text) => setTanggalKeluar(text)}
+            placeholder="Tanggal Keluar Barang"
           />
         </View>
         <TouchableOpacity
