@@ -5,40 +5,39 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ModalList from "../components/ModalList";
 import Icons from "../components/Icons";
 import axios from "axios";
 import Spinner from "react-native-loading-spinner-overlay";
 import { BASE_URL } from "../api/api";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFocusEffect } from "@react-navigation/native";
 
 const KeluarIconScreen = (props: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [itemPick, setItemPick] = useState<any>({});
   const [jumlah, setJumlah] = useState(0);
-  const [tangglaMasuk, setTangglaMasuk] = useState("");
+  const [tanggalKeluar, setTanggalKeluar] = useState("");
 
   const [dataIcon, setDataIcon] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
 
   const updateJumlah = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_keluar/icon.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah: jumlah,
+      await axios.post(`${BASE_URL}barang_icon/update.php`, {
+        kd_barang_icon: itemPick.kd_barang_icon,
+        stok: jumlah,
       });
 
-      await axios.post(`${BASE_URL}riwayat/keluar.php`, {
-        kode_barang: itemPick.kode_barang,
-        jumlah: itemPick.stok - jumlah,
-        tipe: "icon",
-        tanggal: `${tangglaMasuk} 00:00:00`,
-        nama_barang: itemPick.nama_barang,
+      await axios.post(`${BASE_URL}barang_keluar_icon/create.php`, {
+        nm_barang: itemPick.nm_barang,
+        tanggal_keluar: tanggalKeluar,
+        jumlah_keluar: itemPick.stok - jumlah,
       });
 
       setJumlah(0);
-      setTangglaMasuk("");
+      setTanggalKeluar("");
       setItemPick({});
 
       getListBarangIcon();
@@ -60,7 +59,7 @@ const KeluarIconScreen = (props: any) => {
   const getListBarangIcon = async () => {
     setShowSpinner(true);
     try {
-      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_icon/list.php`);
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
         setShowSpinner(false);
@@ -73,14 +72,16 @@ const KeluarIconScreen = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    getListBarangIcon();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getListBarangIcon();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <Spinner visible={showSpinner} textContent={"Loading..."} color="white" />
-      <StatusBar backgroundColor="#1e81b0" barStyle="dark-content" />
+      <StatusBar backgroundColor="#abdbe3" barStyle="dark-content" />
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
         <ModalList
           title="Nama Barang"
@@ -131,11 +132,11 @@ const KeluarIconScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: itemPick.nama_barang ? "600" : "300",
-                color: itemPick.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: itemPick.nm_barang ? "600" : "300",
+                color: itemPick.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {itemPick.nama_barang ? itemPick.nama_barang : "Nama Barang"}
+              {itemPick.nm_barang ? itemPick.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -212,7 +213,7 @@ const KeluarIconScreen = (props: any) => {
               marginTop: 20,
             }}
           >
-            Tanggal Masuk Barang
+            Tanggal Keluar Barang
           </Text>
           <TextInput
             style={{
@@ -221,10 +222,10 @@ const KeluarIconScreen = (props: any) => {
               paddingVertical: 5,
               marginBottom: 10,
             }}
-            value={tangglaMasuk}
+            value={tanggalKeluar}
             keyboardType="numeric"
-            onChangeText={(text) => setTangglaMasuk(text)}
-            placeholder="Tanggal Masuk Contoh (2025-04-29)"
+            onChangeText={(text) => setTanggalKeluar(text)}
+            placeholder="Tanggal Keluar Contoh (2025-04-29)"
           />
         </View>
         <TouchableOpacity
