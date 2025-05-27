@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as SplashScreen from "expo-splash-screen";
 
 import Login from "./src/screens/LoginScreen";
 
@@ -48,12 +49,14 @@ export default function App() {
   useEffect(() => {
     const getData = async () => {
       try {
+        await SplashScreen.preventAutoHideAsync();
         const data = await AsyncStorage.getItem("isLogin");
         setIsLogin(data);
       } catch (error) {
         console.error("Error fetching login state", error);
       } finally {
         setIsLoading(false);
+        await SplashScreen.hideAsync();
       }
     };
     getData();
