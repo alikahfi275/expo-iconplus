@@ -45,7 +45,7 @@ const ReturIconScreen = () => {
 
   const getListBarangIcon = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}barang/icon/list.php`);
+      const response = await axios.get(`${BASE_URL}barang_icon/list.php`);
       if (response.data.status === "success") {
         setDataIcon(response.data.data);
       }
@@ -62,27 +62,15 @@ const ReturIconScreen = () => {
 
   const simpanRetur = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_retur/icon.php`, {
-        nama_barang: namaBarang?.nama_barang,
-        kode_barang: kodeBarang,
-        tanggal_retur: `${tanggalRetur} 00:00:00`,
+      await axios.post(`${BASE_URL}barang_retur_icon/create.php`, {
+        kd_barang_rt: kodeBarang,
+        nm_barang: namaBarang.nm_barang,
+        tanggal_retur: tanggalRetur,
         jumlah: jumlahBarang,
         supplier: supplier,
-        status: status?.value,
         catatan: catatan,
-      });
-
-      await axios.post(`${BASE_URL}riwayat/retur.php`, {
-        kode_barang: kodeBarang,
-        jumlah: jumlahBarang,
-        tanggal: `${tanggalRetur} 00:00:00`,
-        tipe: "icon",
-        status: status?.value,
-        nama_barang: namaBarang?.nama_barang,
-        catatan: catatan,
-        supplier: supplier,
-        nama_pelanggan: "",
-        tanggal_dianter: "00-00-00 00:00:00",
+        status: status?.label,
+        tanggal_kembali: "",
       });
 
       setKodeBarang("");
@@ -156,12 +144,12 @@ const ReturIconScreen = () => {
           <Text
             style={{
               fontSize: 14,
-              fontWeight: namaBarang?.nama_barang ? "600" : "300",
-              color: namaBarang?.nama_barang ? "black" : "#4c4c4c",
+              fontWeight: namaBarang?.nm_barang ? "600" : "300",
+              color: namaBarang?.nm_barang ? "black" : "#4c4c4c",
               marginTop: 5,
             }}
           >
-            {namaBarang?.nama_barang ? namaBarang?.nama_barang : "Nama Barang"}
+            {namaBarang?.nm_barang ? namaBarang?.nm_barang : "Nama Barang"}
           </Text>
           <Icons
             name="arrow-down-drop-circle"
