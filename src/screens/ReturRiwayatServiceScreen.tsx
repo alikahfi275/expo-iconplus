@@ -12,7 +12,7 @@ const ReturRiwayatServiceScreen = (props: any) => {
   const getListRiwayatService = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/retur_list_service.php`
+        `${BASE_URL}barang_retur_service/list.php`
       );
 
       if (response.data.status === "success") {
@@ -64,7 +64,7 @@ const ReturRiwayatServiceScreen = (props: any) => {
                   color: "black",
                   alignItems: "center",
                   padding: 5,
-                  backgroundColor: "#FFFFA3",
+                  backgroundColor: "#1e81b0",
                 }}
               >
                 Tanggal Retur : {moment(item?.tanggal).format("L")}
@@ -77,7 +77,7 @@ const ReturRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Kode Barang : {item?.kode_barang}
+                Kode Barang Retur : {item?.kd_barang_rt}
               </Text>
               <Text
                 style={{
@@ -87,7 +87,7 @@ const ReturRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Nama Barang : {item?.nama_barang}
+                Nama Barang : {item?.nm_barang}
               </Text>
               <Text
                 style={{
@@ -117,7 +117,17 @@ const ReturRiwayatServiceScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Status : {item?.status}
+                Nama Pelanggan : {item?.nm_pelanggan}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "black",
+                  padding: 5,
+                }}
+              >
+                Tanggal Diantar : {item?.tanggal_diantar}
               </Text>
               <Text
                 style={{
@@ -129,16 +139,40 @@ const ReturRiwayatServiceScreen = (props: any) => {
               >
                 Catatan : {item?.catatan}
               </Text>
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "black",
-                  padding: 5,
-                }}
-              >
-                Nama Pelanggan : {item?.nama_pelanggan}
-              </Text>
+              <View style={{ backgroundColor: "#FFFFA3" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "black",
+                    padding: 5,
+                  }}
+                >
+                  Status : {item?.status}
+                </Text>
+              </View>
+              <View style={{ backgroundColor: "#1e81b0" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "black",
+                    padding: 5,
+                  }}
+                >
+                  Tanggal Kembali : {item?.tanggal_kembali || "-"}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "black",
+                    padding: 5,
+                  }}
+                >
+                  Tanggal Diambil : {item?.tanggal_diambil || "-"}
+                </Text>
+              </View>
             </View>
           )}
         />
