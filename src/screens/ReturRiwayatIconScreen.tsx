@@ -11,9 +11,7 @@ const ReturRiwayatIconScreen = (props: any) => {
   const [dataRiwayatIcon, setDataRiwayatIcon] = useState<any>([]);
   const getListRiwayatIcon = async () => {
     try {
-      const response = await axios.get(
-        `${BASE_URL}riwayat/retur_list_Icon.php`
-      );
+      const response = await axios.get(`${BASE_URL}barang_retur_icon/list.php`);
 
       if (response.data.status === "success") {
         setDataRiwayatIcon(response.data.data);
@@ -31,7 +29,7 @@ const ReturRiwayatIconScreen = (props: any) => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <SafeAreaView style={{ flex: 1, backgroundColor: "#abdbe3" }}>
-        <View style={{ backgroundColor: "#1e81b0" }}>
+        <View style={{ backgroundColor: "#FFFFA3" }}>
           <Text
             style={{
               textAlign: "center",
@@ -67,7 +65,7 @@ const ReturRiwayatIconScreen = (props: any) => {
                   backgroundColor: "#1e81b0",
                 }}
               >
-                Tanggal Retur : {moment(item?.tanggal).format("L")}
+                Tanggal Retur : {moment(item?.tanggal_retur).format("L")}
               </Text>
               <Text
                 style={{
@@ -77,7 +75,7 @@ const ReturRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Kode Barang : {item?.kode_barang}
+                Kode Barang Retur : {item?.kd_barang_rt}
               </Text>
               <Text
                 style={{
@@ -87,7 +85,7 @@ const ReturRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Nama Barang : {item?.nama_barang}
+                Nama Barang : {item?.nm_barang}
               </Text>
               <Text
                 style={{
@@ -117,8 +115,35 @@ const ReturRiwayatIconScreen = (props: any) => {
                   padding: 5,
                 }}
               >
-                Status : {item?.status}
+                Status : {item?.catatan}
               </Text>
+              <View style={{ backgroundColor: "#FFFFA3" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "black",
+                    padding: 5,
+                  }}
+                >
+                  Status : {item?.status}
+                </Text>
+              </View>
+              <View style={{ backgroundColor: "#1e81b0" }}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "black",
+                    padding: 5,
+                  }}
+                >
+                  Tanggal Kembali :{" "}
+                  {item?.tanggal_kembali
+                    ? moment(item?.tanggal_kembali).format("L")
+                    : "-"}
+                </Text>
+              </View>
             </View>
           )}
         />
