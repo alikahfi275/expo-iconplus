@@ -19,8 +19,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const ReturSearchRiwayatScreen = (props: any) => {
   const isIcon = props?.route?.params?.isIcon || false;
 
-  const routeName = isIcon ? "icon" : "service";
-
   const [modalVisible, setModalVisible] = useState(false);
   const [namaBarang, setNamaBarang] = useState<any>("");
 
@@ -64,44 +62,38 @@ const ReturSearchRiwayatScreen = (props: any) => {
     }
   };
 
-  const searchByFilter = async () => {
-    try {
-      const response = await axios.post(`${BASE_URL}riwayat/retur_filter.php`, {
-        dari_tanggal: `${tanggalDari} 00:00:00`,
-        ke_tanggal: `${tanggalSampai} 23:59:59`,
-        nama_barang: namaBarang?.nama_barang,
-        tipe: routeName,
-      });
-
-      if (response.data.status === "success") {
-        setDataResult(response.data.data);
-      }
-      setTanggalDari("");
-      setTanggalSampai("");
-      setNamaBarang("");
-    } catch (error) {
-      console.log("Error fetching data:", error);
+  const searchByFilter = () => {
+    if (!tanggalDari || !tanggalSampai || !namaBarang?.nm_barang) {
+      alert("Semua filter (tanggal dan nama barang) harus diisi.");
+      return;
     }
+
+    const filtered = dataRiwayat.filter((item: any) => {
+      const itemTanggal = moment(item.tanggal_retur).startOf("day");
+      const dari = moment(tanggalDari).startOf("day");
+      const sampai = moment(tanggalSampai).endOf("day");
+
+      const cocokNama =
+        item.nm_barang.trim().toLowerCase() ===
+        namaBarang.nm_barang.trim().toLowerCase();
+
+      const cocokTanggal = itemTanggal.isBetween(dari, sampai, undefined, "[]");
+
+      return cocokNama && cocokTanggal;
+    });
+
+    setDataResult(filtered);
   };
 
   const getListRiwayat = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/retur_list_${routeName}.php`
+        `${BASE_URL}barang_retur_${isIcon ? "icon" : "service"}/list.php`
       );
       if (response.data.status === "success") {
         const data = response.data.data;
 
-        const seen = new Set();
-        const filteredData = data.filter((item: any) => {
-          if (seen.has(item.nama_barang)) {
-            return false;
-          }
-          seen.add(item.nama_barang);
-          return true;
-        });
-
-        setDataRiwayat(filteredData);
+        setDataRiwayat(data);
       }
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -112,29 +104,39 @@ const ReturSearchRiwayatScreen = (props: any) => {
     getListRiwayat();
   }, []);
 
-  const renderItem = ({ item }: any) => (
-    <View
-      style={{
-        flexDirection: "row",
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: "#ccc",
-        justifyContent: "space-between",
-        flex: 1,
-      }}
-    >
-      <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {item.kode_barang}
-      </Text>
-      <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {item.nama_barang}
-      </Text>
-      <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
-        {moment(item.tanggal).format("YYYY-MM-DD")}
-      </Text>
-    </View>
-  );
+  const seen = new Set();
+  const filteredData = dataRiwayat.filter((item: any) => {
+    if (seen.has(item.nm_barang)) {
+      return false;
+    }
+    seen.add(item.nm_barang);
+    return true;
+  });
 
+  const renderItem = ({ item }: any) => {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          paddingVertical: 10,
+          borderBottomWidth: 1,
+          borderBottomColor: "#ccc",
+          justifyContent: "space-between",
+          flex: 1,
+        }}
+      >
+        <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
+          {item.kd_barang_rt}
+        </Text>
+        <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
+          {item.nm_barang}
+        </Text>
+        <Text style={{ fontSize: 14, marginHorizontal: 15, color: "black" }}>
+          {moment(item.tanggal_retur).format("YYYY-MM-DD")}
+        </Text>
+      </View>
+    );
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flex: 1, backgroundColor: "#abdbe3" }}>
@@ -142,7 +144,7 @@ const ReturSearchRiwayatScreen = (props: any) => {
           title="Nama Barang"
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          items={dataRiwayat}
+          items={filteredData}
           handleSelect={(item: any) => setNamaBarang(item)}
         />
         <View style={{ backgroundColor: "#FFFFA3" }}>
@@ -216,13 +218,11 @@ const ReturSearchRiwayatScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: namaBarang?.nama_barang ? "600" : "300",
-                color: namaBarang?.nama_barang ? "black" : "#4c4c4c",
+                fontWeight: namaBarang?.nm_barang ? "600" : "300",
+                color: namaBarang?.nm_barang ? "black" : "#4c4c4c",
               }}
             >
-              {namaBarang?.nama_barang
-                ? namaBarang?.nama_barang
-                : "Nama Barang"}
+              {namaBarang?.nm_barang ? namaBarang?.nm_barang : "Nama Barang"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -303,14 +303,14 @@ const ReturSearchRiwayatScreen = (props: any) => {
                   color: "black",
                 }}
               >
-                Tanggal Keluar
+                Tanggal Retur
               </Text>
             </View>
             {/* Table Data */}
             <FlatList
               data={dataResult}
               renderItem={renderItem}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.kd_barang_rt.toString()}
             />
           </View>
         </ScrollView>
