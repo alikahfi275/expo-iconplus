@@ -9,7 +9,14 @@ import {
 import React from "react";
 
 const ModalList = (props: any) => {
-  const { modalVisible, setModalVisible, items, handleSelect, title } = props;
+  const {
+    modalVisible,
+    setModalVisible,
+    items,
+    handleSelect,
+    title,
+    typeRetur,
+  } = props;
   return (
     <Modal
       visible={modalVisible}
@@ -54,15 +61,31 @@ const ModalList = (props: any) => {
                   borderBottomColor: "#ddd",
                 }}
               >
-                <Text
-                  style={{ fontSize: 16, color: "black", textAlign: "center" }}
-                >
-                  {title === "Kode Barang"
-                    ? item.kd_barang_icon
+                {typeRetur ? (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: "black",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item.kd_barang_rt}
+                  </Text>
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: "black",
+                      textAlign: "center",
+                    }}
+                  >
+                    {title === "Kode Barang"
                       ? item.kd_barang_icon
-                      : item.kd_barang_service
-                    : item.nm_barang}
-                </Text>
+                        ? item.kd_barang_icon
+                        : item.kd_barang_service
+                      : item.nm_barang}
+                  </Text>
+                )}
               </TouchableOpacity>
             ))}
           </ScrollView>

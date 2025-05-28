@@ -28,13 +28,17 @@ const ReturEditRiwayatScreen = (props: any) => {
   const [modalProsesVisible, setModalProsesVisible] = useState(false);
   const [status, setStatus] = useState<any>("");
 
+  const [nmPelanggan, setNmPelanggan] = useState("");
+  const [tanggalDiantar, setTanggalDiantar] = useState("");
+  const [tanggalDiambil, setTanggalDiambil] = useState("");
+
   const isService = props?.route?.params?.isService || false;
 
   const routeName = isService ? "service" : "icon";
   const getListRiwayatIcon = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}riwayat/retur_list_${routeName}.php`
+        `${BASE_URL}barang_retur_${routeName}/list.php`
       );
 
       if (response.data.status === "success") {
@@ -56,14 +60,27 @@ const ReturEditRiwayatScreen = (props: any) => {
 
   const handleSelect = (item: any) => {
     setPickItem(item);
-    if (item.kode_barang) {
-      setKodeBarang(item.kode_barang);
-      setNamaBarang(item.nama_barang);
-      setTanggalRetur(moment(item.tanggal).format("YYYY-MM-DD"));
+    if (isService) {
+      setKodeBarang(item.kd_barang_rt);
+      setNamaBarang(item.nm_barang);
+      setTanggalRetur(moment(item.tanggal_retur).format("YYYY-MM-DD"));
+      setStokBarang(Number(item.jumlah));
+      setSupplier(item.supplier);
+      setNmPelanggan(item.nm_pelanggan);
+      setTanggalDiantar(item.tanggal_diantar);
+      setTanggalDiambil(item.tanggal_diambil);
+      setCatatan(item.catatan);
+      setStatus(statusProses[0]);
+      setTanggalKembali(item.tanggal_kembali || "");
+    } else {
+      setKodeBarang(item.kd_barang_rt);
+      setNamaBarang(item.nm_barang);
+      setTanggalRetur(moment(item.tanggal_retur).format("YYYY-MM-DD"));
       setStokBarang(Number(item.jumlah));
       setSupplier(item.supplier);
       setCatatan(item.catatan);
       setStatus(statusProses[0]);
+      setTanggalKembali(item.tanggal_kembali || "");
     }
   };
 
@@ -79,16 +96,32 @@ const ReturEditRiwayatScreen = (props: any) => {
 
   const updateItem = async () => {
     try {
-      await axios.post(`${BASE_URL}barang_retur/edit_${routeName}.php`, {
-        kode_barang: kodeBarang,
-        nama_barang: namaBarang,
-        tanggal_retur: tanggalRetur,
-        jumlah: stokBarang,
-        supplier: supplier,
-        catatan: catatan,
-        status: status?.value,
-        tanggal_kembali: tanggalKembali,
-      });
+      if (isService) {
+        await axios.post(`${BASE_URL}/barang_retur_service/update.php`, {
+          kd_barang_rt: kodeBarang,
+          nm_barang: namaBarang,
+          tanggal_retur: tanggalRetur,
+          jumlah: stokBarang,
+          supplier: supplier,
+          nm_pelanggan: nmPelanggan,
+          tanggal_diantar: tanggalDiantar,
+          tanggal_diambil: tanggalDiambil,
+          catatan: catatan,
+          status: status?.value,
+          tanggal_kembali: tanggalKembali,
+        });
+      } else {
+        await axios.post(`${BASE_URL}/barang_retur_icon/update.php`, {
+          kd_barang_rt: kodeBarang,
+          nm_barang: namaBarang,
+          tanggal_retur: tanggalRetur,
+          jumlah: stokBarang,
+          supplier: supplier,
+          catatan: catatan,
+          status: status?.value,
+          tanggal_kembali: tanggalKembali,
+        });
+      }
 
       setKodeBarang("");
       setNamaBarang("");
@@ -99,6 +132,9 @@ const ReturEditRiwayatScreen = (props: any) => {
       setStatus("");
       setPickItem(null);
       setTanggalKembali("");
+      setNmPelanggan("");
+      setTanggalDiantar("");
+      setTanggalDiambil("");
 
       getListRiwayatIcon();
     } catch (error) {
@@ -116,6 +152,7 @@ const ReturEditRiwayatScreen = (props: any) => {
           setModalVisible={setModalVisible}
           items={dataIcon}
           handleSelect={(item: any) => handleSelect(item)}
+          typeRetur={true}
         />
         <ModalListItem
           title="Proses"
@@ -163,11 +200,11 @@ const ReturEditRiwayatScreen = (props: any) => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: pickItem?.kode_barang ? "600" : "300",
-                color: pickItem?.kode_barang ? "black" : "#4c4c4c",
+                fontWeight: pickItem?.kd_barang_rt ? "600" : "300",
+                color: pickItem?.kd_barang_rt ? "black" : "#4c4c4c",
               }}
             >
-              {pickItem?.kode_barang ? pickItem?.kode_barang : "0"}
+              {pickItem?.kd_barang_rt ? pickItem?.kd_barang_rt : "0"}
             </Text>
             <Icons
               name="arrow-down-drop-circle"
@@ -292,6 +329,7 @@ const ReturEditRiwayatScreen = (props: any) => {
                 </Text>
               </TouchableOpacity>
             </View>
+
             <View>
               <Text
                 style={{
@@ -319,6 +357,94 @@ const ReturEditRiwayatScreen = (props: any) => {
                 placeholder="Supplier"
               />
             </View>
+
+            {isService && (
+              <>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "600",
+                      color: "black",
+                      marginTop: 10,
+                    }}
+                  >
+                    Nama Pelanggan
+                  </Text>
+                  <TextInput
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      backgroundColor: "white",
+                      borderColor: "black",
+                      paddingVertical: 5,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      paddingLeft: 10,
+                    }}
+                    value={nmPelanggan}
+                    onChangeText={setNmPelanggan}
+                    placeholder="Nama Pelanggan"
+                  />
+                </View>
+
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "600",
+                      color: "black",
+                      marginTop: 10,
+                    }}
+                  >
+                    Tanggal Diantar
+                  </Text>
+                  <TextInput
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      backgroundColor: "white",
+                      borderColor: "black",
+                      paddingVertical: 5,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      paddingLeft: 10,
+                    }}
+                    value={tanggalDiantar}
+                    onChangeText={setTanggalDiantar}
+                    placeholder="Tanggal Diantar"
+                  />
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "600",
+                      color: "black",
+                      marginTop: 10,
+                    }}
+                  >
+                    Tanggal Diambil
+                  </Text>
+                  <TextInput
+                    style={{
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      backgroundColor: "white",
+                      borderColor: "black",
+                      paddingVertical: 5,
+                      marginBottom: 10,
+                      marginTop: 5,
+                      paddingLeft: 10,
+                    }}
+                    value={tanggalDiambil}
+                    onChangeText={setTanggalDiambil}
+                    placeholder="Tanggal Diambil"
+                  />
+                </View>
+              </>
+            )}
+
             <View>
               <Text
                 style={{
