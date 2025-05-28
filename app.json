@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/adaptive-icon-plus.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.akael.Iconplus"
     },
     "web": {
       "favicon": "./assets/favicon.png"
